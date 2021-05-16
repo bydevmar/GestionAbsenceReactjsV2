@@ -4,37 +4,34 @@ import "./Login.css"
 export class Login extends Component {
     render() {
         return (
-           <div>
-               <div class="container-fluid">
-                    <div class="row no-gutter">
-                        <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image">
-                        </div>
-                        <div class="col-md-8 col-lg-6">
-                        <div class="login d-flex align-items-center py-5">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-9 col-lg-8 mx-auto">
-                                        <h3 class="login-heading mb-4">Please SignIn</h3>
+            <div>
+                <div className="container-fluid">
+                <div className="row no-gutter">
+                    <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+                    <div className="col-md-8 col-lg-6">
+                        <div className="login d-flex align-items-center py-5">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-9 col-lg-8 mx-auto">
+                                        <h3 className="login-heading mb-4">Please SignIn</h3>
                                         <form>
-                                            <div class="form-label-group">
-                                                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus/>
-                                                <label for="inputEmail">Email address</label>
+                                            <div className="form-label-group">
+                                            <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required onFocus={e=>e.currentTarget.select()} />
+                                            <label htmlFor="inputEmail">Email address</label>
                                             </div>
-
-                                            <div class="form-label-group">
-                                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required/>
-                                            <label for="inputPassword">Password</label>
+                                            <div className="form-label-group">
+                                            <input type="password" id="inputPassword" className="form-control" placeholder="Password" required />
+                                            <label htmlFor="inputPassword">Password</label>
                                             </div>
-
-                                            <div class="custom-control custom-checkbox mb-3">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                <label class="custom-control-label" for="customCheck1">Remember password</label>
+                                            <div className="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                                            <label className="custom-control-label" htmlFor="customCheck1">Remember password</label>
                                             </div>
-                                            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
-                                            <div class="text-center">
-                                                <a class="small" href="/">Forgot password?</a>
+                                            <button className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                                            <div className="text-center">
+                                            <a className="small" href="/">Forgot password?</a>
                                             </div>
-                                        </form>
+                                         </form>
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +39,7 @@ export class Login extends Component {
                     </div>
                 </div>
             </div>
-        </div>
+          </div>
         )
     }
 }
