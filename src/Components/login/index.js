@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import "./Login.css"
-import { useDispatch} from "react-redux"
+import { useDispatch } from "react-redux"
 import { signinAction } from "../../actions/sign_in.action"
 import LoginForm from './LoginForm';
-const { fetchUser } = require("./fetchUser");
-
+import Cookies from 'js-cookie';
+import { Redirect } from 'react-router';
+import { useHistory } from "react-router-dom"
+ 
 const Login = () => {
+    const { fetchUser } = require("./fetchUser");
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const hadleform = async (e) => {
         e.preventDefault();
         fetchUser(userEmail, userPassword)
             .then((result) => {
-
                 if (result.user !== undefined) {
                     dispatch(signinAction(result.user))
+                    Cookies.set("logged", true, { expires: 1 / 72 })
+                    history.push("/dashboard")
                 }
             })
             .catch((error) => {
@@ -30,6 +35,7 @@ const Login = () => {
         setUserPassword(e.target.value)
     }
 
+    if (Boolean(Cookies.get("logged"))) return <Redirect to="/dashboard" />
     return (
         <div>
             <LoginForm

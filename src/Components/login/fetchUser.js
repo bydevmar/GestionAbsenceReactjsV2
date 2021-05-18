@@ -19,9 +19,9 @@ export const fetchUser = (userEmail, userPassword) => {
         axios(config)
             .then((user) => {
                 if (user.data.status === "OK") {
-                    resolve({ user : user.data.details })
+                    resolve({ user: user.data.details })
                 } else {
-                    reject({ user : {} })
+                    reject({ user: {} })
                 }
             })
     })
