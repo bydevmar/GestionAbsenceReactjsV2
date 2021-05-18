@@ -8,11 +8,6 @@ const Dashboard = () => {
                     <main>
                         <div className="container-fluid">
                             <h1 className="mt-4 mb-4">Absences</h1>
-                            {/*
-                            <ol className="breadcrumb mb-4">
-                                <li className="breadcrumb-item active">Dashboard</li>
-                            </ol>
-                            */}
                             <div className="row">
                                 <div className="col-xl-3 col-md-6">
                                     <div className="card bg-primary text-white mb-4">

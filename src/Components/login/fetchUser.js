@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const fetchUser = (userEmail, userPassword, callback) => {
+export const fetchUser = (userEmail, userPassword) => {
 
     var config = {
         method: 'post',
@@ -11,18 +11,20 @@ export const fetchUser = (userEmail, userPassword, callback) => {
         },
         data: {
             "email": "elhadiri@gmail.com",
-            "motdepasse": "12345678z"
+            "motdepasse": "12345678"
         }
     };
 
-    axios(config)
-        .then((user) => {
-            if (user.data.status === "OK") {
-                callback({user : user.data.details})
-            }else {
-                callback({user : {}})
-            }
-        })
+    return new Promise((resolve, reject) => {
+        axios(config)
+            .then((user) => {
+                if (user.data.status === "OK") {
+                    resolve({ user : user.data.details })
+                } else {
+                    reject({ user : {} })
+                }
+            })
+    })
 }
 
 
