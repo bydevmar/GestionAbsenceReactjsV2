@@ -35,7 +35,7 @@ const LoginForm = ( props)  => {
                                                 <input type="checkbox" className="custom-control-input" id="customCheck1" />
                                                 <label className="custom-control-label" htmlFor="customCheck1">Remember password</label>
                                             </div>
-                                            <button className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                                            <button className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 form-control" type="submit">Sign in</button>
                                             <div className="text-center">
                                                 <a className="small" href="/">Forgot password?</a>
                                             </div>

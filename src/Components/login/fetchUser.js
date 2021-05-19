@@ -10,8 +10,8 @@ export const fetchUser = (userEmail, userPassword) => {
             'Content-Type': 'application/json'
         },
         data: {
-            "email": "elhadiri@gmail.com",
-            "motdepasse": "12345678"
+            "email": userEmail,
+            "motdepasse": userPassword
         }
     };
 

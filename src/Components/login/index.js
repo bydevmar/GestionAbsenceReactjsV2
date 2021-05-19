@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./Login.css"
 import { useDispatch } from "react-redux"
-import { signinAction } from "../../actions/sign_in.action"
+import { signInAction , signOffAction} from "../../actions/authActions"
 import LoginForm from './LoginForm';
 import Cookies from 'js-cookie';
 import { Redirect } from 'react-router';
@@ -14,18 +14,21 @@ const Login = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const hadleform = async (e) => {
+    const hadleform = (e) => {
         e.preventDefault();
         fetchUser(userEmail, userPassword)
             .then((result) => {
                 if (result.user !== undefined) {
-                    dispatch(signinAction(result.user))
+                    dispatch(signInAction(result.user))
                     Cookies.set("logged", true, { expires: 1 / 72 })
                     history.push("/dashboard")
                 }
+                else {
+                    dispatch(signOffAction(result.user))
+                }
             })
             .catch((error) => {
-                dispatch(signinAction(error.user))
+                dispatch(signOffAction( error.user ))
             })
     }
     const onChangeEmail = e => {

@@ -1,11 +1,13 @@
 import Cookies from 'js-cookie';
 import React from 'react';
 import { Redirect } from 'react-router';
+import DashboardNav from './DashboardNav';
 
 const Dashboard = () => {
     if (!Boolean(Cookies.get("logged"))) return <Redirect to="/login" />
     return (
         <div>
+            <DashboardNav/>
             <div className="sb-nav-fixed">
                 <div id="layoutSidenav_content">
                     <main>

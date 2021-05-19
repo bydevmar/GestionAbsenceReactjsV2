@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 export class Footer extends Component {
-    //<footer className="text-center text-white" style="background-color: #f1f1f1;">
+
     render() {
         return (
             <div>
@@ -53,6 +53,7 @@ export class Footer extends Component {
                 <div className="text-center text-dark p-3" style={{backgroundColor : "rgba(0, 0, 0, 0.2)"}}>
                     © 2020 Copyright: Gestion Absence
                 </div>
+                
                 </footer>
                  
             </div>
