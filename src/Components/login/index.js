@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./Login.css"
-import { useDispatch } from "react-redux"
+import { useDispatch , useSelector } from "react-redux"
 import { signInAction , signOffAction} from "../../actions/authActions"
 import LoginForm from './LoginForm';
 import Cookies from 'js-cookie';
@@ -8,6 +8,7 @@ import { Redirect } from 'react-router';
 import { useHistory } from "react-router-dom"
  
 const Login = () => {
+    const isLogged = useSelector(state => state.auth.isLogged)
     const { fetchUser } = require("./fetchUser");
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
@@ -20,7 +21,10 @@ const Login = () => {
             .then((result) => {
                 if (result.user !== undefined) {
                     dispatch(signInAction(result.user))
-                    Cookies.set("logged", true, { expires: 1 / 72 })
+                    Cookies.set("logged", {
+                        user: result.user,
+                        isLogged : true
+                    }, { expires: 1 / 72 })
                     history.push("/dashboard")
                 }
                 else {
@@ -37,8 +41,7 @@ const Login = () => {
     const onChangePassword = (e) => {
         setUserPassword(e.target.value)
     }
-
-    if (Boolean(Cookies.get("logged"))) return <Redirect to="/dashboard" />
+    if (isLogged ) return <Redirect to="/dashboard" />
     return (
         <div>
             <LoginForm

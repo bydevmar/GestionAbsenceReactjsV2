@@ -1,10 +1,12 @@
-import Cookies from 'js-cookie';
 import React from 'react';
 import { Redirect } from 'react-router';
 import DashboardNav from './DashboardNav';
+import { useSelector } from "react-redux"
 
 const Dashboard = () => {
-    if (!Boolean(Cookies.get("logged"))) return <Redirect to="/login" />
+    const isLogged = useSelector(state => state.auth.isLogged)
+
+    if (!isLogged ) return <Redirect to="/login" />
     return (
         <div>
             <DashboardNav/>
