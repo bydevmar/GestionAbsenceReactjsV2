@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import React from 'react'
 import Cookies from 'js-cookie';
 import {useSelector,useDispatch} from "react-redux"
-import {signOffAction} from "../../actions/authActions"
+import {signOffAction} from "../../../actions/authActions"
 
 export default function Navbar() {
     const dispatch = useDispatch()
@@ -13,8 +13,6 @@ export default function Navbar() {
         return <Redirect to="login"/>
     }
     const islogged = useSelector(state => state.auth.isLogged)
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    console.log(islogged);
 
     return (
         <div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import DashboardNav from './DashboardNav';
 import { useSelector } from "react-redux"
+import DashboardNavbar from './DashboardNavbar';
 
 const Dashboard = () => {
     const isLogged = useSelector(state => state.auth.isLogged)
@@ -9,7 +9,7 @@ const Dashboard = () => {
     if (!isLogged ) return <Redirect to="/login" />
     return (
         <div>
-            <DashboardNav/>
+            <DashboardNavbar/>
             <div className="sb-nav-fixed">
                 <div id="layoutSidenav_content">
                     <main>
