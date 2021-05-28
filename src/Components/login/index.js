@@ -6,10 +6,11 @@ import LoginForm from './LoginForm';
 import Cookies from 'js-cookie';
 import { Redirect } from 'react-router';
 import { useHistory } from "react-router-dom"
- 
+const { fetchUser } = require("./fetchUser");
+
+
 const Login = () => {
     const isLogged = useSelector(state => state.auth.isLogged)
-    const { fetchUser } = require("./fetchUser");
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const dispatch = useDispatch()

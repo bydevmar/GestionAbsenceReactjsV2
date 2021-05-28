@@ -1,22 +1,17 @@
 import axios from "axios";
 
 
-export const fetchUser = (userEmail, userPassword) => {
-
-    var config = {
-        method: 'post',
-        url: 'http://127.0.0.1:3001/api/utilisateur',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        data: {
-            "email": userEmail,
-            "motdepasse": userPassword
-        }
-    };
+export const fetchAbsences = (id_u) => {
 
     return new Promise((resolve, reject) => {
-        axios(config)
+        axios
+        .get('http://127.0.0.1:3001/api/absences/'+ id_u)
+        .then(absences => {
+            resolve({ absences : absences.data.details })
+        })
+
+        
+        /*axios(config)
             .then((user) => {
                 if (user.data.status === "OK") {
                     resolve({ user: user.data.details })
@@ -26,12 +21,7 @@ export const fetchUser = (userEmail, userPassword) => {
             }).catch((error)=>{
                 console.log("Fetch user Error axios!!!");
                 reject({ user: {} })
-            })
+            })*/
     })
 }
-
-
-
-
-
 
