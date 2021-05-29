@@ -6,7 +6,7 @@ import LoginForm from './LoginForm';
 import Cookies from 'js-cookie';
 import { Redirect } from 'react-router';
 import { useHistory } from "react-router-dom"
-const { fetchUser } = require("./fetchUser");
+const { fetchUserFromApi } = require("../../helpers/fetchUserFromApi");
 
 
 const Login = () => {
@@ -18,7 +18,7 @@ const Login = () => {
 
     const hadleform = (e) => {
         e.preventDefault();
-        fetchUser(userEmail, userPassword)
+        fetchUserFromApi(userEmail, userPassword)
             .then((result) => {
                 if (result.user !== undefined) {
                     dispatch(signInAction(result.user))

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const fetchUser = (userEmail, userPassword) => {
+export const fetchUserFromApi = (userEmail, userPassword) => {
 
     var config = {
         method: 'post',

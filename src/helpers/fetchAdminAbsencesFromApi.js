@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const fetchAbsences = (id_u) => {
+export const fetchAdminAbsencesFromApi = (id_u) => {
 
     return new Promise((resolve, reject) => {
         axios

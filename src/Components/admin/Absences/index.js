@@ -1,4 +1,4 @@
-import { fetchAbsences } from "./fetchAdminAbsences"
+import { fetchAdminAbsencesFromApi } from "../../../helpers/fetchAdminAbsencesFromApi"
 import React, { Component } from 'react'
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { Link } from "react-router-dom";
@@ -14,7 +14,7 @@ class Absence extends Component {
     }
 
     loadData() {
-        fetchAbsences("609a93614f29bc1bbc6ea128").then((result) => {
+        fetchAdminAbsencesFromApi("609a93614f29bc1bbc6ea128").then((result) => {
             this.setState(
                 {
                     absences: result.absences
@@ -27,7 +27,6 @@ class Absence extends Component {
         if (window.confirm("Press a button!") === true) {
             //script to delete absence
         }
-
     }
 
     loadTable = () => {
@@ -36,14 +35,23 @@ class Absence extends Component {
             let jour;
             if ((date.getMonth() + 1) < 10)
                 jour = date.getDate() + '-0' + (date.getMonth() + 1) + '-' + date.getFullYear()
+            
+            let heure = new Date(item.heuredebut);
             let heuredebut;
-            if (date.getMinutes() < 10)
-                heuredebut = date.getHours() + ":0" + date.getMinutes() + ":" + date.getSeconds();
+            if (heure.getMinutes() < 10)
+                heuredebut = heure.getHours() + ":0" + heure.getMinutes();
             else
-                heuredebut = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                heuredebut = heure.getHours() + ":" + heure.getMinutes();
+
+            let heuref = new Date(item.heurefin);
+            let heurefin;
+            if (heuref.getMinutes() < 10)
+            heurefin = heuref.getHours() + ":0" + heuref.getMinutes();
+            else
+            heurefin = heuref.getHours() + ":" + heuref.getMinutes();
 
             //destructuring
-            const { _id, numinscription, nom, prenom, designation, annee, heurefin } = item 
+            const { _id, numinscription, nom, prenom, designation, annee } = item
 
             return (
                 <tr key={_id}>
@@ -57,7 +65,7 @@ class Absence extends Component {
                     <td>{heurefin}</td>
                     <td>
                         <button type="button" name={_id} id={_id} className="btn btn-warning">Modifier</button>
-                        <button type="button" name={_id} id={_id} className="btn btn-danger" onClick={()=>this.deleteAbsence(_id)}>Supprimer</button>
+                        <button type="button" name={_id} id={_id} className="btn btn-danger" onClick={() => this.deleteAbsence(_id)}>Supprimer</button>
                     </td>
                 </tr>
             )
@@ -73,31 +81,35 @@ class Absence extends Component {
                         <h1>Liste des Absences</h1>
                         <div className="container">
                             <Link
-                                to='/absences/create'
+                                to='/admin/absences/create'
                                 className="btn btn-primary btn-lg  mb-4">
                                 Ajouter absence
                             </Link>
                         </div>
-                        <table className="table">
-                            <thead className="thead-dark">
-                                <tr>
-                                    <th scope="col">N.I.</th>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Prenom</th>
-                                    <th scope="col">Groupe</th>
-                                    <th scope="col">annee</th>
-                                    <th scope="col">Jour d'absence</th>
-                                    <th scope="col">Heur Debut</th>
-                                    <th scope="col">Heure Fin</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    this.loadTable()
-                                }
-                            </tbody>
-                        </table>
+                        <div className="card-body">
+                            <div className="table-responsive">
+                                <table className="table table-bordered" width="100%" cellSpacing={0}>
+                                    <thead className="thead-dark">
+                                        <tr>
+                                            <th scope="col">N.I.</th>
+                                            <th scope="col">Nom</th>
+                                            <th scope="col">Prenom</th>
+                                            <th scope="col">Groupe</th>
+                                            <th scope="col">annee</th>
+                                            <th scope="col">Jour d'absence</th>
+                                            <th scope="col">Heur Debut</th>
+                                            <th scope="col">Heure Fin</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            this.loadTable()
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@ const DashboardNavbar = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-md navbar-light bg-faded">
-        <a className="navbar-brand d-md-none" href="/dashboard">DASHBOARD</a>
+        <a className="navbar-brand d-md-none" href="/admin/dashboard">DASHBOARD</a>
         <button className="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -14,42 +14,42 @@ const DashboardNavbar = () => {
           <div className="collapse navbar-collapse mx-auto w-auto justify-content-center" id="navbarNavAltMarkup">
             <div className="navbar-nav">
               <Link
-                to='/statistiques' 
+                to='/admin/statistiques' 
                 className="nav-item nav-link active">                                   
                 Statistiques
               </Link>
               <Link
-                to='/absences' 
+                to='/admin/absences' 
                 className="nav-item nav-link active">                                   
                 Absences
               </Link>
               <Link
-                to='/formateurs' 
+                to='/admin/formateurs' 
                 className="nav-item nav-link active">                                   
                 Formateurs
               </Link>
               <Link
-                to='/groupes' 
+                to='/admin/groupes' 
                 className="nav-item nav-link active">                                   
                 Groupes
               </Link>
               <Link
-                to='/filiers' 
+                to='/admin/filiers' 
                 className="nav-item nav-link active">                                   
                 Filiers
               </Link>
               <Link
-                to='/niveau' 
+                to='/admin/niveaux' 
                 className="nav-item nav-link active">                                   
                 Niveaux
               </Link>
               <Link
-                to='/affectations' 
+                to='/admin/affectations' 
                 className="nav-item nav-link active">                                   
                 Affectations
               </Link>
               <Link
-                to='/stagiaires' 
+                to='/admin/stagiaires' 
                 className="nav-item nav-link active">                                   
                 Stagiaires
               </Link>

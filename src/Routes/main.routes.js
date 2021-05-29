@@ -4,6 +4,7 @@ import Login from "../Components/login"
 import Home from "../Components/Home"
 import Dashboard from '../Components/admin/Dashboard';
 import Absences from '../Components/admin/Absences';
+import AjouterAbsences from '../Components/admin/Absences/AjouterAbsence';
 
  function Routes() {
     return (
@@ -11,8 +12,9 @@ import Absences from '../Components/admin/Absences';
             <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/login" exact component={Login} />
-                <Route path="/dashboard" exact component={Dashboard} />
-                <Route path="/absences" exact component={Absences} />
+                <Route path="/admin/dashboard" exact component={Dashboard} />
+                <Route path="/admin/absences" exact component={Absences} />
+                <Route path="/admin/absences/create" exact component={AjouterAbsences} />
                 <Route path="*" exact component={Home} />
             </Switch>
         </div>
