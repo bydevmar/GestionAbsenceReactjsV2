@@ -26,7 +26,7 @@ const Login = () => {
                         user: result.user,
                         isLogged : true
                     }, { expires: 1 / 72 })
-                    history.push("/dashboard")
+                    history.push("/admin/dashboard")
                 }
                 else {
                     dispatch(signOffAction(result.user))
@@ -42,7 +42,7 @@ const Login = () => {
     const onChangePassword = (e) => {
         setUserPassword(e.target.value)
     }
-    if (isLogged ) return <Redirect to="/dashboard" />
+    if (isLogged ) return <Redirect to="/admin/dashboard" />
     return (
         <div>
             <LoginForm

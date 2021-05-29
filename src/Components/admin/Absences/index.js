@@ -2,6 +2,7 @@ import { fetchAdminAbsencesFromApi } from "../../../helpers/fetchAdminAbsencesFr
 import React, { Component } from 'react'
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { Link } from "react-router-dom";
+import { deleteAbseence } from "../../../helpers/deleteAbsence";
 
 
 class Absence extends Component {
@@ -23,10 +24,18 @@ class Absence extends Component {
         })
     }
 
-    deleteAbsence = (id) => {
+    deleteAbsence = (id_absence) => {
         if (window.confirm("Press a button!") === true) {
-            //script to delete absence
+            deleteAbseence("609a93614f29bc1bbc6ea128",id_absence)
+            .then((resultat) => {
+                console.log(resultat.data.message);
+                this.loadData();
+            })
+            .catch((error)=>{
+                console.log(error.data.message);
+            })
         }
+        
     }
 
     loadTable = () => {
