@@ -7,8 +7,8 @@ import { deleteAbseence } from "../../../helpers/deleteAbsence";
 
 class Absence extends Component {
     constructor(props) {
-        super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
-        this.state = { //state is by default an object
+        super(props)
+        this.state = { 
             absences: []
         }
         this.loadData();
@@ -73,8 +73,13 @@ class Absence extends Component {
                     <td>{heuredebut}</td>
                     <td>{heurefin}</td>
                     <td>
-                        <button type="button" name={_id} id={_id} className="btn btn-warning">Modifier</button>
-                        <button type="button" name={_id} id={_id} className="btn btn-danger" onClick={() => this.deleteAbsence(_id)}>Supprimer</button>
+                        <Link
+                            to='/admin/absences/update'
+                            className="btn btn-warning"
+                        >
+                            Modifier
+                        </Link>
+                        <button type="button"  className="btn btn-danger" onClick={() => this.deleteAbsence(_id)}>Supprimer</button>
                     </td>
                 </tr>
             )
