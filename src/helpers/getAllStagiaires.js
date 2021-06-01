@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const fetchStagiairesFromApi = () => {
+export const getAllStagiaires = () => {
 
     return new Promise((resolve, reject) => {
         axios

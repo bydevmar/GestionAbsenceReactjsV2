@@ -8,10 +8,6 @@ const updateAbsence = (state = initialState, action) => {
             return {
                 absenceToUpdate : action.payload
             }
-        case "EmptyUpdate":
-            return {
-                absenceToUpdate : ""
-            }
         default:
             return state
     }

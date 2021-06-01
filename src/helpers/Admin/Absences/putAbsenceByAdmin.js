@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const updateAbsence = (id_utilisateur,id_absence,stagiaire,formateur,dateabsence,heuredebut,heurefin) => {
+export const putAbsenceByAdmin = (id_utilisateur,id_absence,stagiaire,formateur,dateabsence,heuredebut,heurefin) => {
 
     return new Promise((resolve, reject) => {
         var data = JSON.stringify({

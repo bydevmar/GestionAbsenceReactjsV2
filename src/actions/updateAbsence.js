@@ -4,11 +4,3 @@ export const updateAbsenceAction = ( absence ) => {
         payload : absence
     }
 }
-
-
-export const EmptyUpdateAction = () => {
-    return {
-        type : "EmptyUpdate",
-        payload : ""
-    }
-}

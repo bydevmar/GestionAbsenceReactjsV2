@@ -1,13 +1,11 @@
-import { fetchAdminAbsencesFromApi } from "../../../helpers/fetchAdminAbsencesFromApi"
-import React, { useEffect, useState } from 'react'
-import DashboardNavbar from "../Dashboard/DashboardNavbar";
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { deleteAbseence } from "../../../helpers/deleteAbsence";
+import DashboardNavbar from "../Dashboard/DashboardNavbar";
+import { getAllAbsencesByAdmin } from "../../../helpers/Admin/Absences/getAllAbsencesByAdmin"
+import { deleteAbsenceByAdmin } from "../../../helpers/Admin/Absences/deleteAbsenceByAdmin";
 import { updateAbsenceAction } from '../../../actions/updateAbsence';
 import { useDispatch } from "react-redux";
-
-
-
+import moment from 'moment';
 
 const Absence = () => {
 
@@ -19,14 +17,14 @@ const Absence = () => {
     }, [])
 
     const loadData = () => {
-        fetchAdminAbsencesFromApi("609a93614f29bc1bbc6ea128").then((result) => {
+        getAllAbsencesByAdmin("609a93614f29bc1bbc6ea128").then((result) => {
             setAbsences(result.absences);
         });
     }
 
     const deleteAbsence = (id_absence) => {
         if (window.confirm("Press a button!") === true) {
-            deleteAbseence("609a93614f29bc1bbc6ea128", id_absence)
+            deleteAbsenceByAdmin("609a93614f29bc1bbc6ea128", id_absence)
                 .then((resultat) => {
                     console.log(resultat.data.message);
                     loadData();
@@ -35,41 +33,22 @@ const Absence = () => {
                     console.log(error.data.message);
                 })
         }
-
     }
+
     const loadTable = () => {
         return absences.map((item) => {
-            let date = new Date(item.dateabsence);
-            let jour;
-            if ((date.getMonth() + 1) < 10)
-                jour = date.getDate() + '-0' + (date.getMonth() + 1) + '-' + date.getFullYear()
-
-            let heure = new Date(item.heuredebut);
-            let heuredebut;
-            if (heure.getMinutes() < 10)
-                heuredebut = heure.getHours() + ":0" + heure.getMinutes();
-            else
-                heuredebut = heure.getHours() + ":" + heure.getMinutes();
-
-            let heuref = new Date(item.heurefin);
-            let heurefin;
-            if (heuref.getMinutes() < 10)
-                heurefin = heuref.getHours() + ":0" + heuref.getMinutes();
-            else
-                heurefin = heuref.getHours() + ":" + heuref.getMinutes();
-
             //destructuring
-            const { _id, numinscription, nom, prenom, designation, annee } = item
+            const { _id, numinscription, nom, prenom, designation, annee, dateabsence ,heuredebut ,heurefin } = item
             return (
-                <tr key={_id}>
-                    <td>{numinscription}</td>
-                    <td>{nom}</td>
-                    <td>{prenom}</td>
-                    <td>{designation}</td>
-                    <td>{annee}</td>
-                    <td>{jour}</td>
-                    <td>{heuredebut}</td>
-                    <td>{heurefin}</td>
+                <tr key={ _id } >
+                    <td> { numinscription } </td>
+                    <td> { nom } </td>
+                    <td> { prenom } </td>
+                    <td> { designation } </td>
+                    <td> { annee } </td>
+                    <td> { moment( dateabsence ).format("YYYY-MM-DD") } </td>
+                    <td> { moment( heuredebut ).format("HH:mm") } </td>
+                    <td> { moment( heurefin ).format("HH:mm") }</td>
                     <td>
                         <Link
                             to='/admin/absences/update'

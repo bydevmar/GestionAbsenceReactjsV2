@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import DashboardNavbar from './DashboardNavbar';
 
 

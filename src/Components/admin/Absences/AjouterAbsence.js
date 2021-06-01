@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
 import { useSelector } from "react-redux"
 import { Redirect } from 'react-router'
-import { fetchStagiairesFromApi } from '../../../helpers/fetchStagiairesFromApi';
-import { fetchFormateursFromApi } from '../../../helpers/fetchFormateursFromApi';
-import { marquerAbsenceByAdmin } from '../../../helpers/marquerAbsenceByAdmin';
+import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
+import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
+import { putAbsenceByAdmin } from '../../../helpers/Admin/Absences/putAbsenceByAdmin';
 import { useHistory } from "react-router-dom";
 
 
@@ -18,16 +18,16 @@ function AjouterAbsence() {
     const [dateabsence, setdateabsence] = useState();
     const [heureDebut, setheureDebut] = useState();
     const [heureFin, setheureFin] = useState();
-     
+
     let history = useHistory();
 
     useEffect(() => {
-        fetchStagiairesFromApi()
+        getAllStagiaires()
             .then((result) => {
                 setstagiaires(result.stagiaires)
             })
 
-        fetchFormateursFromApi()
+        getAllFormateurs()
             .then((result) => {
                 setformateurs(result.formateurs)
             })
@@ -52,17 +52,17 @@ function AjouterAbsence() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        marquerAbsenceByAdmin("609a93614f29bc1bbc6ea128",stagiaire,formateur,dateabsence,heureDebut,heureFin)
-        .then((result)=>{
-            if(result.status === "OK"){
-                history.push("/admin/absences")
-            }
-            else{
-                console.log(result.message);
-            }
-        }).catch((err)=>{
-            console.log(err);
-        })
+        putAbsenceByAdmin("609a93614f29bc1bbc6ea128", stagiaire, formateur, dateabsence, heureDebut, heureFin)
+            .then((result) => {
+                if (result.status === "OK") {
+                    history.push("/admin/absences")
+                }
+                else {
+                    console.log(result.message);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
     }
 
     if (!isLogged)
@@ -84,7 +84,6 @@ function AjouterAbsence() {
                                             className="form-select mb-3"
                                             aria-label="stagiaire"
                                             onChange={(e) => setstagiaire(e.target.value)}
-
                                         >
                                             <option>Selectionner stagiaire</option>
                                             {

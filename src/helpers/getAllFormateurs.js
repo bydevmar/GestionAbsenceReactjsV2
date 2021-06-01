@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const fetchFormateursFromApi = () => {
+export const getAllFormateurs = () => {
 
     return new Promise((resolve, reject) => {
         axios

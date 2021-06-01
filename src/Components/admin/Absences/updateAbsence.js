@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
 import { useSelector } from "react-redux"
 import { Redirect } from 'react-router'
-import { fetchStagiairesFromApi } from '../../../helpers/fetchStagiairesFromApi';
-import { fetchFormateursFromApi } from '../../../helpers/fetchFormateursFromApi';
-import { updateAbsence } from '../../../helpers/updateAbsence';
+import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
+import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
+import { putAbsenceByAdmin } from '../../../helpers/Admin/Absences/putAbsenceByAdmin';
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
 
@@ -29,12 +29,12 @@ function UpdateAbsence() {
         setheureDebut(moment(absenceToUpdate.heuredebut).format("HH:mm"));
         setheureFin(moment(absenceToUpdate.heurefin).format("HH:mm"));
 
-        fetchStagiairesFromApi()
+        getAllStagiaires()
             .then((result) => {
                 setstagiaires(result.stagiaires)
             })
 
-        fetchFormateursFromApi()
+        getAllFormateurs()
             .then((result) => {
                 setformateurs(result.formateurs)
             })
@@ -43,17 +43,17 @@ function UpdateAbsence() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        updateAbsence("609a93614f29bc1bbc6ea128",absenceToUpdate._id,stagiaire,formateur,dateAbsence,heureDebut,heureFin)
-        .then((result)=>{
-            if(result.status === "OK"){
-                history.push("/admin/absences")
-            }
-            else{
-                console.log(result.message);
-            }
-        }).catch((err)=>{
-            console.log(err);
-        })
+        putAbsenceByAdmin("609a93614f29bc1bbc6ea128", absenceToUpdate._id, stagiaire, formateur, dateAbsence, heureDebut, heureFin)
+            .then((result) => {
+                if (result.status === "OK") {
+                    history.push("/admin/absences")
+                }
+                else {
+                    console.log(result.message);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
 
     }
 
@@ -90,7 +90,6 @@ function UpdateAbsence() {
                                                     </option>
                                                 )
                                             }
-
                                         </select>
                                     </div>
 
@@ -105,13 +104,13 @@ function UpdateAbsence() {
                                             <option>Selectionner formateur</option>
                                             {
                                                 formateurs.map((item, index) =>
-                                                <option
-                                                    value={item._id}
-                                                    key={index}
-                                                >
-                                                    {item.nom + " " + item.prenom}
-                                                </option>
-                                            )
+                                                    <option
+                                                        value={item._id}
+                                                        key={index}
+                                                    >
+                                                        {item.nom + " " + item.prenom}
+                                                    </option>
+                                                )
                                             }
                                         </select>
                                     </div>
