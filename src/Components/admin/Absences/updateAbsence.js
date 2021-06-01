@@ -4,19 +4,31 @@ import { useSelector } from "react-redux"
 import { Redirect } from 'react-router'
 import { fetchStagiairesFromApi } from '../../../helpers/fetchStagiairesFromApi';
 import { fetchFormateursFromApi } from '../../../helpers/fetchFormateursFromApi';
+import { updateAbsence } from '../../../helpers/updateAbsence';
+import { useHistory } from "react-router-dom";
+import moment from 'moment';
 
 function UpdateAbsence() {
     const isLogged = useSelector(state => state.auth.isLogged);
+    const absenceToUpdate = useSelector(state => state.updateAbsence.absenceToUpdate);
     const [stagiaires, setstagiaires] = useState([]);
     const [formateurs, setformateurs] = useState([]);
 
     const [stagiaire, setstagiaire] = useState("");
     const [formateur, setformateur] = useState("");
-    const [dateabsence, setdateabsence] = useState();
-    const [heureDebut, setheureDebut] = useState();
-    const [heureFin, setheureFin] = useState();
+    const [dateAbsence, setDateAbsence] = useState("");
+    const [heureDebut, setheureDebut] = useState("");
+    const [heureFin, setheureFin] = useState("");
+
+    let history = useHistory();
 
     useEffect(() => {
+        setstagiaire(absenceToUpdate.stagiaire);
+        setformateur(absenceToUpdate.formateur);
+        setDateAbsence(moment(absenceToUpdate.dateabsence).format("YYYY-MM-DD"));
+        setheureDebut(moment(absenceToUpdate.heuredebut).format("HH:mm"));
+        setheureFin(moment(absenceToUpdate.heurefin).format("HH:mm"));
+
         fetchStagiairesFromApi()
             .then((result) => {
                 setstagiaires(result.stagiaires)
@@ -26,32 +38,29 @@ function UpdateAbsence() {
             .then((result) => {
                 setformateurs(result.formateurs)
             })
-
     }, [])
-
-    const remplirComboStagiaires = () => {
-        return stagiaires.map((item, index) => {
-            return (
-                <option value={item._id} key={index}>{item.nom + " " + item.prenom}</option>
-            )
-        })
-    }
-
-    const remplirComboformateurs = () => {
-        return formateurs.map((item, index) => {
-            return (
-                <option value={item._id} key={index} >{item.nom + " " + item.prenom}</option>
-            )
-        })
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
+        updateAbsence("609a93614f29bc1bbc6ea128",absenceToUpdate._id,stagiaire,formateur,dateAbsence,heureDebut,heureFin)
+        .then((result)=>{
+            if(result.status === "OK"){
+                history.push("/admin/absences")
+            }
+            else{
+                console.log(result.message);
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
+
     }
 
     if (!isLogged)
         return <Redirect to="/login" />
+    if (!absenceToUpdate)
+        return <Redirect to="/admin/absences" />
     return (
         <div>
             <div>
@@ -62,18 +71,26 @@ function UpdateAbsence() {
                             <div className="col-md-6">
                                 <h2 className="h2 pb-4">Modifier une absence</h2>
                                 <form className="form mt-4" onSubmit={(e) => handleSubmit(e)}>
-
                                     <div className="form-group ">
                                         <label htmlFor="stagiaire">stagiaire :</label><br />
                                         <select
                                             className="form-select mb-3"
                                             aria-label="stagiaire"
                                             onChange={(e) => setstagiaire(e.target.value)}
+                                            value={absenceToUpdate.stagiaire}
                                         >
                                             <option>Selectionner stagiaire</option>
                                             {
-                                                remplirComboStagiaires()
+                                                stagiaires.map((item, index) =>
+                                                    <option
+                                                        value={item._id}
+                                                        key={index}
+                                                    >
+                                                        {item.nom + " " + item.prenom}
+                                                    </option>
+                                                )
                                             }
+
                                         </select>
                                     </div>
 
@@ -83,10 +100,18 @@ function UpdateAbsence() {
                                             className="form-select mb-3"
                                             ria-label="formateur"
                                             onChange={(e) => setformateur(e.target.value)}
+                                            value={absenceToUpdate.formateur}
                                         >
-                                            <option  >Selectionner formateur</option>
+                                            <option>Selectionner formateur</option>
                                             {
-                                                remplirComboformateurs()
+                                                formateurs.map((item, index) =>
+                                                <option
+                                                    value={item._id}
+                                                    key={index}
+                                                >
+                                                    {item.nom + " " + item.prenom}
+                                                </option>
+                                            )
                                             }
                                         </select>
                                     </div>
@@ -95,7 +120,8 @@ function UpdateAbsence() {
                                         <label htmlFor="dateabsence">date absence :</label><br />
                                         <input type="date"
                                             max="2021-05-30"
-                                            onChange={(e) => setdateabsence(e.target.value)}
+                                            value={dateAbsence}
+                                            onChange={(e) => setDateAbsence(e.target.value)}
                                         />
                                     </div>
 
@@ -105,6 +131,7 @@ function UpdateAbsence() {
                                             min="08:00"
                                             max="18:30"
                                             onChange={(e) => setheureDebut(e.target.value)}
+                                            value={heureDebut}
                                         />
                                     </div>
 
@@ -113,11 +140,13 @@ function UpdateAbsence() {
                                         <input type="time"
                                             min="08:00"
                                             max="18:30"
-                                            onChange={(e) => setheureFin(e.target.value)} />
+                                            onChange={(e) => setheureFin(e.target.value)}
+                                            value={heureFin}
+                                        />
                                     </div>
 
                                     <div className="form-group justify-content-center">
-                                        <input type="submit" className="btn btn-success form-control" value="Ajouter" />
+                                        <input type="submit" className="btn btn-success form-control" value="Modifier" />
                                     </div>
                                 </form>
                             </div>

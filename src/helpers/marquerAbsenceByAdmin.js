@@ -8,8 +8,8 @@ export const marquerAbsenceByAdmin= ( gestionnaire , stagiaire , formateur , dat
             "stagiaire": stagiaire,
             "formateur": formateur,
             "dateabsence": dateabsence,
-            "heuredebut": dateabsence + "T" + heuredebut,
-            "heurefin": dateabsence + "T" + heurefin
+            "heuredebut": dateabsence + "T" + heuredebut +"Z",
+            "heurefin": dateabsence + "T" + heurefin +"Z"
           });
           
           var config = {
