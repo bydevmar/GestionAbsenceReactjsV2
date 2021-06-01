@@ -7,6 +7,7 @@ import Absences from '../Components/admin/Absences';
 import AjouterAbsences from '../Components/admin/Absences/AjouterAbsence';
 import UpdateAbsence from '../Components/admin/Absences/updateAbsence';
 import Stagiaires from '../Components/admin/Stagiaires';
+import AddStagiaire from '../Components/admin/Stagiaires/addStagiaire';
 
  function Routes() {
     return (
@@ -19,6 +20,7 @@ import Stagiaires from '../Components/admin/Stagiaires';
                 <Route path="/admin/absences/create" exact component={AjouterAbsences} />
                 <Route path="/admin/absences/update" exact component={UpdateAbsence} />
                 <Route path="/admin/stagiaires" exact component={Stagiaires} />
+                <Route path="/admin/stagiaires/create" exact component={AddStagiaire} />
                 <Route path="*" exact component={Home} />
             </Switch>
         </div>
