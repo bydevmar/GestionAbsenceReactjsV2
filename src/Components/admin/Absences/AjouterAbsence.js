@@ -22,7 +22,7 @@ function AjouterAbsence() {
     let history = useHistory();
 
     useEffect(() => {
-        getAllStagiaires()
+        getAllStagiaires("609a93614f29bc1bbc6ea128")
             .then((result) => {
                 setstagiaires(result.stagiaires)
             })

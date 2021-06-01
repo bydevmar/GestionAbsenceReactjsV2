@@ -29,7 +29,7 @@ function UpdateAbsence() {
         setheureDebut(moment(absenceToUpdate.heuredebut).format("HH:mm"));
         setheureFin(moment(absenceToUpdate.heurefin).format("HH:mm"));
 
-        getAllStagiaires()
+        getAllStagiaires("609a93614f29bc1bbc6ea128")
             .then((result) => {
                 setstagiaires(result.stagiaires)
             })
@@ -54,7 +54,6 @@ function UpdateAbsence() {
             }).catch((err) => {
                 console.log(err);
             })
-
     }
 
     if (!isLogged)
