@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
 import { useDispatch } from "react-redux";
-import {updateStagiaireAction} from '../../../actions/updateStagiaire.action'
+import { updateStagiaireAction } from '../../../actions/updateStagiaire.action'
+import { deleteStagiaireByAdmin } from '../../../helpers/Admin/Stagiaires/deleteStagiaireByAdmin';
 
 const Stagiaires = () => {
     const [stagiaires, setStagiaires] = useState([])
@@ -18,6 +19,19 @@ const Stagiaires = () => {
             .then((result) => {
                 setStagiaires(result.stagiaires)
             })
+    }
+
+    const deleteStagiaire = (id_stagiaire) => {
+        if (window.confirm("êtes-vous sûr de vouloir supprimer ce stagiaire!") === true) {
+            deleteStagiaireByAdmin("609a93614f29bc1bbc6ea128", id_stagiaire)
+                .then((resultat) => {
+                    console.log(resultat.data.message);
+                    loadData();
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
     }
 
     const loadTable = () => {
@@ -36,11 +50,11 @@ const Stagiaires = () => {
                         <Link
                             to={'/admin/stagiaires/update'}
                             className="btn btn-warning"
-                            onClick={()=>{dispatch(updateStagiaireAction(stagiaire))}}
+                            onClick={() => { dispatch(updateStagiaireAction(stagiaire)) }}
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="btn btn-danger">Supprimer</button>
+                        <button type="button" className="btn btn-danger" onClick={() => deleteStagiaire(_id)}>Supprimer</button>
                     </td>
                 </tr>
             )

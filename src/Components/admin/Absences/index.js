@@ -23,7 +23,7 @@ const Absence = () => {
     }
 
     const deleteAbsence = (id_absence) => {
-        if (window.confirm("Press a button!") === true) {
+        if (window.confirm("êtes-vous sûr de vouloir supprimer cette absence!") === true) {
             deleteAbsenceByAdmin("609a93614f29bc1bbc6ea128", id_absence)
                 .then((resultat) => {
                     console.log(resultat.data.message);
