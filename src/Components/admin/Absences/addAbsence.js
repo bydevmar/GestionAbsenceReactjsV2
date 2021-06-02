@@ -8,7 +8,7 @@ import { putAbsenceByAdmin } from '../../../helpers/Admin/Absences/putAbsenceByA
 import { useHistory } from "react-router-dom";
 
 
-function AjouterAbsence() {
+function AddAbsence() {
     const isLogged = useSelector(state => state.auth.isLogged);
     const [stagiaires, setstagiaires] = useState([]);
     const [formateurs, setformateurs] = useState([]);
@@ -19,7 +19,7 @@ function AjouterAbsence() {
     const [heureDebut, setheureDebut] = useState();
     const [heureFin, setheureFin] = useState();
 
-    let history = useHistory();
+    const history = useHistory();
 
     useEffect(() => {
         getAllStagiaires("609a93614f29bc1bbc6ea128")
@@ -145,5 +145,5 @@ function AjouterAbsence() {
     )
 }
 
-export default AjouterAbsence
+export default AddAbsence
 

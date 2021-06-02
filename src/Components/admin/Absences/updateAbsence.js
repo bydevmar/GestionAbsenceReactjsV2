@@ -7,6 +7,8 @@ import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
 import { putAbsenceByAdmin } from '../../../helpers/Admin/Absences/putAbsenceByAdmin';
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
+import { useDispatch } from "react-redux";
+import { deleteAbsenceToUpdateAction } from '../../../actions/updateAbsence.action';
 
 function UpdateAbsence() {
     const isLogged = useSelector(state => state.auth.isLogged);
@@ -14,20 +16,18 @@ function UpdateAbsence() {
     const [stagiaires, setstagiaires] = useState([]);
     const [formateurs, setformateurs] = useState([]);
 
-    const [stagiaire, setstagiaire] = useState("");
-    const [formateur, setformateur] = useState("");
-    const [dateAbsence, setDateAbsence] = useState("");
-    const [heureDebut, setheureDebut] = useState("");
-    const [heureFin, setheureFin] = useState("");
+    const [stagiaire, setstagiaire] = useState(absenceToUpdate.stagiaire);
+    const [formateur, setformateur] = useState(absenceToUpdate.formateur);
+    const [dateAbsence, setDateAbsence] = useState(moment(absenceToUpdate.dateabsence).format("YYYY-MM-DD"));
+    const [heureDebut, setheureDebut] = useState(moment(absenceToUpdate.heuredebut).format("HH:mm"));
+    const [heureFin, setheureFin] = useState(moment(absenceToUpdate.heurefin).format("HH:mm"));
 
     let history = useHistory();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        setstagiaire(absenceToUpdate.stagiaire);
-        setformateur(absenceToUpdate.formateur);
-        setDateAbsence(moment(absenceToUpdate.dateabsence).format("YYYY-MM-DD"));
-        setheureDebut(moment(absenceToUpdate.heuredebut).format("HH:mm"));
-        setheureFin(moment(absenceToUpdate.heurefin).format("HH:mm"));
+        if (!absenceToUpdate.stagiaire)
+            return history.push("/admin/absences")
 
         getAllStagiaires("609a93614f29bc1bbc6ea128")
             .then((result) => {
@@ -38,7 +38,12 @@ function UpdateAbsence() {
             .then((result) => {
                 setformateurs(result.formateurs)
             })
-    }, [])
+
+            return () => {
+                console.log("unmounting");
+                dispatch(deleteAbsenceToUpdateAction())
+            }
+    },[])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -58,8 +63,6 @@ function UpdateAbsence() {
 
     if (!isLogged)
         return <Redirect to="/login" />
-    if (!absenceToUpdate)
-        return <Redirect to="/admin/absences" />
     return (
         <div>
             <div>

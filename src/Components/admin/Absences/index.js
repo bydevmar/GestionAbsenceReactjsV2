@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllAbsencesByAdmin } from "../../../helpers/Admin/Absences/getAllAbsencesByAdmin"
 import { deleteAbsenceByAdmin } from "../../../helpers/Admin/Absences/deleteAbsenceByAdmin";
-import { updateAbsenceAction } from '../../../actions/updateAbsence';
+import { updateAbsenceAction } from '../../../actions/updateAbsence.action';
 import { useDispatch } from "react-redux";
 import moment from 'moment';
 

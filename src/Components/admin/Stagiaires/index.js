@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
+import { useDispatch } from "react-redux";
+import {updateStagiaireAction} from '../../../actions/updateStagiaire.action'
 
 const Stagiaires = () => {
     const [stagiaires, setStagiaires] = useState([])
+    const dispatch = useDispatch();
 
     useEffect(() => {
         loadData()
@@ -31,8 +34,9 @@ const Stagiaires = () => {
 
                     <td>
                         <Link
-                            to='/admin/stagiaires/update'
+                            to={'/admin/stagiaires/update'}
                             className="btn btn-warning"
+                            onClick={()=>{dispatch(updateStagiaireAction(stagiaire))}}
                         >
                             Modifier
                         </Link>
