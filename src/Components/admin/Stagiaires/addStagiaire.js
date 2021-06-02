@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import DashboardNavbar from '../Dashboard/DashboardNavbar'
-import { useSelector } from "react-redux"
-import { Redirect } from 'react-router'
+import React, { useEffect, useState } from 'react';
+import DashboardNavbar from '../Dashboard/DashboardNavbar';
+import { useSelector } from "react-redux";
+import { Redirect } from 'react-router';
 import { getAllGroupes } from '../../../helpers/getAllGroupes';
+import { useHistory } from "react-router-dom";
+import {postStagiaire} from '../../../helpers/Admin/Stagiaires/postStagiaire';
 
 function AddStagiaire() {
     const isLogged = useSelector(state => state.auth.isLogged);
@@ -13,15 +15,26 @@ function AddStagiaire() {
 
     const [groupes, setgroupes] = useState([]);
 
+    let history = useHistory();
+
     useEffect(() => {
         getAllGroupes("609a93614f29bc1bbc6ea128")
             .then((result) => {
-                setgroupes(result.groupes)
+                setgroupes(result.groupes);
             })
     }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        postStagiaire("609a93614f29bc1bbc6ea128",numinscription,nom,prenom,groupe)
+        .then((result)=>{
+            if(result.status === "OK"){
+                console.log(result);
+                history.push("/admin/stagiaires");
+            }
+        }).catch(err=>{
+            console.log(err);
+        })
     }
 
     if (!isLogged)
@@ -51,7 +64,7 @@ function AddStagiaire() {
                                             className="form-control"
                                             type="text"
                                             id="nomstagiaire"
-                                            onChange={(e) => setnuminscription(e.target.value)} 
+                                            onChange={(e) => setnom(e.target.value)} 
                                         />
                                     </div>
                                     <div className="form-group">
@@ -60,7 +73,7 @@ function AddStagiaire() {
                                             className="form-control"
                                             type="text"
                                             id="prenomstagiaire"
-                                            onChange={(e) => setnuminscription(e.target.value)} 
+                                            onChange={(e) => setprenom(e.target.value)} 
                                         />
                                     </div>
 
