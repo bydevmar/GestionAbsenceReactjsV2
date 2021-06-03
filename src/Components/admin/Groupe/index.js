@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllGroupes } from '../../../helpers/getAllGroupes';
+import { deleteGroupeByAdmin } from '../../../helpers/Admin/groupes/deleteGroupeByAdmin';
 
 const Groupes = () => {
     const [groupes, setgroupes] = useState([])
@@ -15,10 +16,27 @@ const Groupes = () => {
                 setgroupes(result.groupes);
             })
     }
-   
+    const deleteGroupe = (id_groupe) => {
+        if (window.confirm("êtes-vous sûr de vouloir supprimer ce groupe!") === true) {
+            deleteGroupeByAdmin("609a93614f29bc1bbc6ea128", id_groupe)
+                .then(result => {
+                    if (result.status === "OK") {
+                        console.log("supprmé avec succes");
+                        loadData();
+                    }
+                    else {
+                        console.log("error lors de la suppression!");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }
+
     const loadTable = () => {
         return groupes.map((item) => {
-            const { _id, designation , annee , filier } = item
+            const { _id, designation, annee, filier } = item
             return (
                 <tr key={_id} >
                     <td> {designation} </td>
@@ -26,12 +44,12 @@ const Groupes = () => {
                     <td> {filier} </td>
                     <td>
                         <Link
-                            to={"/admin/groupes/"+_id+"/update"}
+                            to={"/admin/groupes/" + _id + "/update"}
                             className="btn btn-warning"
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="btn btn-danger" >Supprimer</button>
+                        <button type="button" className="btn btn-danger" onClick={() => { deleteGroupe(_id) }}>Supprimer</button>
                     </td>
                 </tr>
             )
