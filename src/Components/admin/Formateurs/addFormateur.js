@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
 import { useSelector } from "react-redux"
-import { Redirect } from 'react-router'
-import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
-import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
-import { putAbsenceByAdmin } from '../../../helpers/Admin/Absences/putAbsenceByAdmin';
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from 'react-router'
+import { postFormateur } from '../../../helpers/Admin/Formateur/postFormateurByAdmin';
+
 
 
 function AddFormateur() {
@@ -19,12 +17,25 @@ function AddFormateur() {
     const [motdepasse, setmotdepasse] = useState("");
     const [confirmation, setconfirmation] = useState("");
 
+    const history = useHistory()
+
     useEffect(() => {
 
     }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(motdepasse === confirmation){
+            postFormateur("609a93614f29bc1bbc6ea128", email , nom , prenom , matricule , cin , motdepasse)
+            .then(result => {
+                if (result.status === "OK") {
+                    history.push("/admin/formateurs")
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
     }
 
     if (!isLogged)
