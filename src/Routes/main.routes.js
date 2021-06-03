@@ -18,6 +18,7 @@ import UpdateGroupe from '../Components/admin/Groupe/UpdateGroupe';
 import Filiers from '../Components/admin/Filiers';
 import Niveaux from '../Components/admin/Niveaux';
 import AddNiveau from '../Components/admin/Niveaux/addNiveau';
+import AddFilier from '../Components/admin/Filiers/AddFilier';
 
  const Routes = () => {
     return (
@@ -44,6 +45,7 @@ import AddNiveau from '../Components/admin/Niveaux/addNiveau';
                 <Route path="/admin/groupes/:id_g/update" exact component={UpdateGroupe} />
 
                 <Route path="/admin/filiers" exact component={Filiers} />
+                <Route path="/admin/filiers/create" exact component={AddFilier} />
 
                 <Route path="/admin/niveaux" exact component={Niveaux} />
                 <Route path="/admin/niveaux/create" exact component={AddNiveau} />
