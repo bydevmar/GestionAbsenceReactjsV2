@@ -29,10 +29,12 @@ const Login = () => {
                     history.push("/admin/dashboard")
                 }
                 else {
+                    console.log("error login");
                     dispatch(signOffAction(result.user))
                 }
             })
             .catch((error) => {
+                console.log("error login");
                 dispatch(signOffAction( error.user ))
             })
     }

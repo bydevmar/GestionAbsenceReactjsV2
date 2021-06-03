@@ -13,7 +13,7 @@ import Formateurs from '../Components/admin/Formateurs';
 import AddFormateur from '../Components/admin/Formateurs/addFormateur';
 import UpdateFormateur from '../Components/admin/Formateurs/updateFormateur';
 
- function Routes() {
+ const Routes = () => {
     return (
         <div>
             <Switch>
@@ -31,7 +31,7 @@ import UpdateFormateur from '../Components/admin/Formateurs/updateFormateur';
 
                 <Route path="/admin/formateurs" exact component={Formateurs} />
                 <Route path="/admin/formateurs/create" exact component={AddFormateur} />
-                <Route path="/admin/formateurs/update" exact component={UpdateFormateur} />
+                <Route path="/admin/formateurs/:id_f/update" exact component={UpdateFormateur} />
 
                 <Route path="*" exact component={Home} />
             </Switch>

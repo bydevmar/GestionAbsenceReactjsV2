@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
 import { useSelector } from "react-redux"
-import { Redirect, useHistory } from 'react-router'
+import { Redirect, useHistory, useParams } from 'react-router'
+import { putFormateurByAdmin } from '../../../helpers/Admin/Formateur/putFormateurByAdmin';
+import { getFormateurByAdmin } from '../../../helpers/getFormateurByAdmin';
 
-function AddFormateur(props) {
+function UpdateFormateur(props) {
     const history = useHistory();
-
     const isLogged = useSelector(state => state.auth.isLogged);
 
+    const [formateur, setformateur] = useState("");
     const [email, setemail] = useState("");
     const [nom, setnom] = useState("");
     const [prenom, setprenom] = useState("");
@@ -16,45 +18,43 @@ function AddFormateur(props) {
     const [motdepasse, setmotdepasse] = useState("");
     const [confirmation, setconfirmation] = useState("");
 
-    const loadData = () => {
-        if (props.location.state) {
-            if (props.location.state.formateur) {
-                const formateurToUpdate = props.location.state.formateur;
-                setemail(formateurToUpdate.email);
-                setnom(formateurToUpdate.nom);
-                setprenom(formateurToUpdate.prenom);
-                setmatricule(formateurToUpdate.matricule);
-                setcin(formateurToUpdate.cin);
-            }
-            else {
-                history.push({
-                    pathname: '/admin/formateurs',
-                    state: { formateur : {} }
-                  })
-            }
-        }
-        else {
-            history.push({
-                pathname: '/admin/formateurs',
-                state: { formateur : {} }
-              })
-        }
-    }
-
+    const { id_f } = useParams()
     useEffect(() => {
-
-        loadData();
-        return () => {
-            props.location.state = {
-                formateur : {}
+        getFormateurByAdmin("609a93614f29bc1bbc6ea128",id_f)
+        .then(result =>{
+            if(result.status === "OK"){
+                const formateur = result.details
+                setformateur(formateur._id);
+                setemail(formateur.email);
+                setnom(formateur.nom);
+                setprenom(formateur.prenom);
+                setmatricule(formateur.matricule);
+                setcin(formateur.cin)
             }
+        }).catch(err => {
+            console.log(err);
+        })
+        return () => {
+            console.log("cleanUP!");
         }
-
-    }, [])
+    }, [id_f])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        if( motdepasse === confirmation ){
+            putFormateurByAdmin("609a93614f29bc1bbc6ea128",formateur,email,nom ,prenom,matricule,cin,motdepasse)
+            .then(result => {
+                if(result.status === "OK"){
+                    history.push("/admin/formateurs")
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+        else{
+            console.log("Mot de passe et confirmation ne correspond pas");
+        }
     }
 
     if (!isLogged)
@@ -152,5 +152,5 @@ function AddFormateur(props) {
     )
 }
 
-export default AddFormateur
+export default UpdateFormateur
 
