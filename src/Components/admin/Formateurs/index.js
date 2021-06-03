@@ -30,8 +30,12 @@ const Formateurs = () => {
                     <td> {cin} </td>
                     <td>
                         <Link
-                            to='/admin/absences/update'
+                            to={{
+                                pathname : "/admin/formateurs/update",
+                                state : { formateur : item }
+                            }}
                             className="btn btn-warning"
+                            
                         >
                             Modifier
                         </Link>

@@ -11,6 +11,7 @@ import AddStagiaire from '../Components/admin/Stagiaires/addStagiaire';
 import UpdateStagiaire from '../Components/admin/Stagiaires/updateStagiaire';
 import Formateurs from '../Components/admin/Formateurs';
 import AddFormateur from '../Components/admin/Formateurs/addFormateur';
+import UpdateFormateur from '../Components/admin/Formateurs/updateFormateur';
 
  function Routes() {
     return (
@@ -30,6 +31,7 @@ import AddFormateur from '../Components/admin/Formateurs/addFormateur';
 
                 <Route path="/admin/formateurs" exact component={Formateurs} />
                 <Route path="/admin/formateurs/create" exact component={AddFormateur} />
+                <Route path="/admin/formateurs/update" exact component={UpdateFormateur} />
 
                 <Route path="*" exact component={Home} />
             </Switch>
