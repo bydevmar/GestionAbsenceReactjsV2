@@ -26,7 +26,7 @@ const Groupes = () => {
                     <td> {filier} </td>
                     <td>
                         <Link
-                            to={"/"}
+                            to={"/admin/groupes/"+_id+"/update"}
                             className="btn btn-warning"
                         >
                             Modifier

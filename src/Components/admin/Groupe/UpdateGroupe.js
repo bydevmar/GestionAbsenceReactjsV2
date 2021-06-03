@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
 import { useSelector } from "react-redux"
-import { Redirect, useHistory } from 'react-router'
-import {postGroupe} from "../../../helpers/Admin/groupes/postGroupeByAdmin"
+import { Redirect, useHistory, useParams } from 'react-router'
 import { getAllFiliers } from '../../../helpers/getAllFiliersByAdmin'
+import { getGroupeByAdmin } from '../../../helpers/getGroupeByAdmin'
+import { putGroupeByAdmin } from '../../../helpers/Admin/groupes/putGroupeByAdmin'
 
-
-
-
-function AddGroupe() {
+function UpdateGroupe() {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
@@ -18,19 +16,38 @@ function AddGroupe() {
     const [filiers, setfiliers ] = useState([]);
     
     const history = useHistory()
+    const {id_g} = useParams();
 
     useEffect(() => {
         getAllFiliers("609a93614f29bc1bbc6ea128")
         .then(result =>{
             setfiliers(result.details)
         })
-
+        getGroupeByAdmin("609a93614f29bc1bbc6ea128",id_g)
+        .then(result =>{
+            
+            if(result.status === "OK"){
+                const groupe = result.details
+                setdesignation(groupe.designation);
+                setannee(groupe.annee);
+                setfilier(groupe.idfilier);
+                console.log(result);
+            }
+            else{
+                console.log("Update grupe error");
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+        return () => {
+            console.log("cleanUP!");
+        }
     }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (window.confirm("êtes-vous sûr de vouloir ajouter ce groupe!") === true){
-            postGroupe("609a93614f29bc1bbc6ea128", designation , annee , filier)
+        if (window.confirm("êtes-vous sûr de vouloir modifier ce groupe!") === true){
+            putGroupeByAdmin("609a93614f29bc1bbc6ea128",id_g, designation , annee , filier)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);
@@ -67,6 +84,7 @@ function AddGroupe() {
                                             className="form-control"
                                             type="text"
                                             id="designation"
+                                            value={designation}
                                             onChange={(e) => setdesignation(e.target.value)}
                                         />
                                     </div>
@@ -78,6 +96,7 @@ function AddGroupe() {
                                             min="1"
                                             max="3"
                                             id="annee"
+                                            value={annee}
                                             onChange={(e) => setannee(e.target.value)}
                                         />
                                     </div>
@@ -86,6 +105,7 @@ function AddGroupe() {
                                         <select
                                             id="filier "
                                             className="form-control mb-3"
+                                            value={filier}
                                             onChange={(e) => setfilier(e.target.value)}
                                         >
                                             <option>Selectionner une filier</option>
@@ -112,5 +132,5 @@ function AddGroupe() {
     )
 }
 
-export default AddGroupe
+export default UpdateGroupe;
 
