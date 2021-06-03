@@ -13,6 +13,7 @@ import Formateurs from '../Components/admin/Formateurs';
 import AddFormateur from '../Components/admin/Formateurs/addFormateur';
 import UpdateFormateur from '../Components/admin/Formateurs/updateFormateur';
 import Groupes from '../Components/admin/Groupe';
+import AddGroupe from '../Components/admin/Groupe/AddGroupe';
 
  const Routes = () => {
     return (
@@ -35,6 +36,7 @@ import Groupes from '../Components/admin/Groupe';
                 <Route path="/admin/formateurs/:id_f/update" exact component={UpdateFormateur} />
 
                 <Route path="/admin/groupes" exact component={Groupes} />
+                <Route path="/admin/groupes/create" exact component={AddGroupe} />
 
                 <Route path="*" exact component={Home} />
             </Switch>
