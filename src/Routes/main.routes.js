@@ -12,6 +12,7 @@ import UpdateStagiaire from '../Components/admin/Stagiaires/updateStagiaire';
 import Formateurs from '../Components/admin/Formateurs';
 import AddFormateur from '../Components/admin/Formateurs/addFormateur';
 import UpdateFormateur from '../Components/admin/Formateurs/updateFormateur';
+import Groupes from '../Components/admin/Groupe';
 
  const Routes = () => {
     return (
@@ -32,6 +33,8 @@ import UpdateFormateur from '../Components/admin/Formateurs/updateFormateur';
                 <Route path="/admin/formateurs" exact component={Formateurs} />
                 <Route path="/admin/formateurs/create" exact component={AddFormateur} />
                 <Route path="/admin/formateurs/:id_f/update" exact component={UpdateFormateur} />
+
+                <Route path="/admin/groupes" exact component={Groupes} />
 
                 <Route path="*" exact component={Home} />
             </Switch>

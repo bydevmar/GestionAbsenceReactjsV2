@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllFormateurs } from "../../../helpers/getAllFormateurs"
+import { deleteFormateurByAdmin } from "../../../helpers/Admin/Formateur/deleteFormateurByAdmin"
 
 const Formateurs = () => {
     const [formateurs, setformateurs] = useState([])
-
+    const history = useHistory();
     useEffect(() => {
         loadData()
     }, [])
@@ -16,7 +17,20 @@ const Formateurs = () => {
                 setformateurs(result.formateurs)
             })
     }
-
+    const deleteFormateur = (id) => {
+        if (window.confirm("êtes-vous sûr de vouloir supprimer ce Formateur!") === true) {
+            deleteFormateurByAdmin("609a93614f29bc1bbc6ea128", id)
+                .then(result => {
+                    if (result.status === "OK") {
+                        console.log(result.message);
+                        loadData()
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }
 
     const loadTable = () => {
         return formateurs.map((item) => {
@@ -30,12 +44,12 @@ const Formateurs = () => {
                     <td> {cin} </td>
                     <td>
                         <Link
-                            to={"/admin/formateurs/"+_id+"/update"}
+                            to={"/admin/formateurs/" + _id + "/update"}
                             className="btn btn-warning"
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="btn btn-danger" >Supprimer</button>
+                        <button type="button" className="btn btn-danger" onClick={() => { deleteFormateur(_id) }}>Supprimer</button>
                     </td>
                 </tr>
             )
