@@ -19,9 +19,9 @@ const Filiers = () => {
             })
     }
 
-    const deleteFilier = (id_groupe) => {
+    const deleteFilier = (id_filier) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer cette filier!") === true) {
-            deleteFilierByAdmin("609a93614f29bc1bbc6ea128", id_groupe)
+            deleteFilierByAdmin("609a93614f29bc1bbc6ea128", id_filier)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log("supprmé avec succes");
