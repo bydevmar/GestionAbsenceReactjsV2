@@ -47,11 +47,11 @@ const Filiers = () => {
                     <td>
                         <Link
                             to={"/admin/filiers/" + _id + "/update"}
-                            className="btn btn-warning"
+                            className="form-control btn btn-warning"
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="btn btn-danger" onClick={() => deleteFilier(_id)}>Supprimer</button>
+                        <button type="button" className="form-control btn btn-danger" onClick={() => deleteFilier(_id)}>Supprimer</button>
                     </td>
                 </tr>
             )

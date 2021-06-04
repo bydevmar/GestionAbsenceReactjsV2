@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import { deleteAffectationByAdmin } from '../../../helpers/Admin/Affectations/deleteAffectationByAdmin';
 import { getAllAffectations } from '../../../helpers/getAllAffectationsByAdmin';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 
@@ -17,7 +18,23 @@ const Affectations = () => {
                 console.log(err);
             })
     }
-
+    const deleteAffectation = (id_affectation) => {
+        if (window.confirm("êtes-vous sûr de vouloir supprimer cette Affectation!") === true) {
+            deleteAffectationByAdmin("609a93614f29bc1bbc6ea128", id_affectation)
+                .then(result => {
+                    if (result.status === "OK") {
+                        console.log(result.message);
+                        loadData();
+                    }
+                    else {
+                        console.log("error lors de la suppression!");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }
     
     const loadTable = () => {
         return affectations.map((item) => {
@@ -30,11 +47,11 @@ const Affectations = () => {
                     <td>
                         <Link
                             to={"/admin/affectations/" + _id + "/update"}
-                            className="btn btn-warning"
+                            className="form-control btn btn-warning"
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="btn btn-danger" >Supprimer</button>
+                        <button type="button" className="form-control btn btn-danger" onClick={() =>{deleteAffectation(_id)}}>Supprimer</button>
                     </td>
                 </tr>
             )

@@ -49,12 +49,12 @@ const Stagiaires = () => {
                     <td>
                         <Link
                             to={'/admin/stagiaires/update'}
-                            className="btn btn-warning"
+                            className="form-control btn btn-warning"
                             onClick={() => { dispatch(updateStagiaireAction(stagiaire)) }}
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="btn btn-danger" onClick={() => deleteStagiaire(_id)}>Supprimer</button>
+                        <button type="button" className="form-control btn btn-danger" onClick={() => deleteStagiaire(_id)}>Supprimer</button>
                     </td>
                 </tr>
             )

@@ -52,12 +52,12 @@ const Absence = () => {
                     <td>
                         <Link
                             to='/admin/absences/update'
-                            className="btn btn-warning"
+                            className="form-control btn btn-warning"
                             onClick={() => { dispatch(updateAbsenceAction(item)) }}
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="btn btn-danger" onClick={() => deleteAbsence(_id)}>Supprimer</button>
+                        <button type="button" className="form-control btn btn-danger" onClick={() => deleteAbsence(_id)}>Supprimer</button>
                     </td>
                 </tr>
             )
