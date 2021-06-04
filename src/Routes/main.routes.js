@@ -21,6 +21,8 @@ import AddNiveau from '../Components/admin/Niveaux/addNiveau';
 import AddFilier from '../Components/admin/Filiers/AddFilier';
 import UpdateFilier from '../Components/admin/Filiers/UpdateFilier';
 import UpdateNiveau from '../Components/admin/Niveaux/UpdateNiveau';
+import Affectations from '../Components/admin/Affectations';
+import AddAffectation from '../Components/admin/Affectations/AddAffectation';
 
  const Routes = () => {
     return (
@@ -53,6 +55,9 @@ import UpdateNiveau from '../Components/admin/Niveaux/UpdateNiveau';
                 <Route path="/admin/niveaux" exact component={Niveaux} />
                 <Route path="/admin/niveaux/create" exact component={AddNiveau} />
                 <Route path="/admin/niveaux/:id_niveau/update" exact component={UpdateNiveau} />
+
+                <Route path="/admin/affectations" exact component={Affectations} />
+                <Route path="/admin/affectations/create" exact component={AddAffectation} />
 
                 <Route path="*" exact component={Home} />
             </Switch>
