@@ -23,6 +23,7 @@ import UpdateFilier from '../Components/admin/Filiers/UpdateFilier';
 import UpdateNiveau from '../Components/admin/Niveaux/UpdateNiveau';
 import Affectations from '../Components/admin/Affectations';
 import AddAffectation from '../Components/admin/Affectations/AddAffectation';
+import UpdateAffectation from '../Components/admin/Affectations/UpdateAffectation';
 
  const Routes = () => {
     return (
@@ -58,6 +59,7 @@ import AddAffectation from '../Components/admin/Affectations/AddAffectation';
 
                 <Route path="/admin/affectations" exact component={Affectations} />
                 <Route path="/admin/affectations/create" exact component={AddAffectation} />
+                <Route path="/admin/affectations/:id_affectation/update" exact component={UpdateAffectation} />
 
                 <Route path="*" exact component={Home} />
             </Switch>

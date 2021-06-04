@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import DashboardNavbar from '../Dashboard/DashboardNavbar';
 import { useSelector } from "react-redux";
-import { Redirect, useHistory } from 'react-router';
+import { Redirect, useHistory, useParams } from 'react-router';
 import { getAllGroupes } from '../../../helpers/getAllGroupes';
 import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
-import {postAffectation} from '../../../helpers/Admin/Affectations/postAffectationByAdmin'
+import {putAffectation, putAffectationByAdmin} from '../../../helpers/Admin/Affectations/putAffectationByAdmin'
+import { getAffectationByAdmin } from '../../../helpers/getAffectationByAdmin';
 
-const AddAffectation = () => {
+const UpdateAffectation = () => {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [formateur, setformateur] = useState("");
@@ -14,6 +15,8 @@ const AddAffectation = () => {
 
     const [formateurs, setformateurs ] = useState([]);
     const [groupes, setgroupes ] = useState([]);
+
+    const {id_affectation} = useParams()
     
     const history = useHistory()
 
@@ -26,13 +29,20 @@ const AddAffectation = () => {
         .then(result =>{
             setgroupes(result.groupes)
         })
-
+        getAffectationByAdmin("609a93614f29bc1bbc6ea128",id_affectation)
+        .then(result =>{
+            if(result.status === "OK"){
+                const affectation = result.details;
+                setformateur(affectation.idformateur)
+                setgroupe(affectation.idgroupe)
+            }
+        })
     }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (window.confirm("êtes-vous sûr de vouloir ajouter cette affectation!") === true){
-            postAffectation("609a93614f29bc1bbc6ea128",formateur , groupe)
+        if (window.confirm("êtes-vous sûr de vouloir modifier cette affectation!") === true){
+            putAffectationByAdmin("609a93614f29bc1bbc6ea128",id_affectation, formateur , groupe)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);
@@ -43,7 +53,7 @@ const AddAffectation = () => {
                 }
             })
             .catch(err => {
-                console.log("error lors de l'ajout de cette filier!");
+                console.log("error lors de la modification de cette affectation!");
                 console.log(err);
             })
         }
@@ -59,7 +69,7 @@ const AddAffectation = () => {
                     <div className="container mt-4">
                         <div className="row justify-content-center">
                             <div className="col-md-6">
-                                <h2 className="h2 pb-4">Ajouter une affectation</h2>
+                                <h2 className="h2 pb-4">Modifier une affectation</h2>
                                 <form className="form mt-4" onSubmit={(e) => handleSubmit(e)}>
 
                                 <div className="form-group ">
@@ -67,6 +77,7 @@ const AddAffectation = () => {
                                         <select
                                             id="formateur"
                                             className="form-control mb-3"
+                                            value={formateur}
                                             onChange={(e) => setformateur(e.target.value)}
                                         >
                                             <option>Selectionner un Formateur</option>
@@ -84,6 +95,7 @@ const AddAffectation = () => {
                                         <select
                                             id="groupe"
                                             className="form-control mb-3"
+                                            value={groupe}
                                             onChange={(e) => setgroupe(e.target.value)}
                                         >
                                             <option>Selectionner un groupe</option>
@@ -98,8 +110,9 @@ const AddAffectation = () => {
                                     </div>
                                    
                                     <div className="form-group justify-content-center">
-                                        <input type="submit" className="btn btn-success form-control" value="Ajouter" />
+                                        <input type="submit" className="btn btn-success form-control" value="Modifier" />
                                     </div>
+                                    
                                 </form>
                             </div>
                         </div>
@@ -110,5 +123,5 @@ const AddAffectation = () => {
     )
 }
 
-export default AddAffectation
+export default UpdateAffectation
 
