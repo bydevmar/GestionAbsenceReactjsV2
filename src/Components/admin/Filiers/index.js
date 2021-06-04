@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import { deleteFilierByAdmin } from '../../../helpers/Admin/Filiers/deleteFilierByAdmin';
 import { getAllFiliers } from '../../../helpers/getAllFiliersByAdmin';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 
@@ -18,6 +19,23 @@ const Filiers = () => {
             })
     }
 
+    const deleteFilier = (id_groupe) => {
+        if (window.confirm("êtes-vous sûr de vouloir supprimer cette filier!") === true) {
+            deleteFilierByAdmin("609a93614f29bc1bbc6ea128", id_groupe)
+                .then(result => {
+                    if (result.status === "OK") {
+                        console.log("supprmé avec succes");
+                        loadData();
+                    }
+                    else {
+                        console.log("error lors de la suppression!");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }
 
     const loadTable = () => {
         return filiers.map((item) => {
@@ -33,7 +51,7 @@ const Filiers = () => {
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="btn btn-danger" >Supprimer</button>
+                        <button type="button" className="btn btn-danger" onClick={() => deleteFilier(_id)}>Supprimer</button>
                     </td>
                 </tr>
             )
