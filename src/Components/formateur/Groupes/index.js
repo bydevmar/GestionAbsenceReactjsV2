@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllGroupes } from '../../../helpers/getAllGroupes';
 
@@ -25,14 +24,6 @@ const GroupesFormateur = () => {
                     <td> {designation} </td>
                     <td> {annee} </td>
                     <td> {filier} </td>
-                    <td>
-                        <Link
-                            to={"/admin/stagiaires/" + _id }
-                            className="btn btn-success form-control"
-                        >
-                            Stagiaires
-                        </Link>
-                    </td>
                 </tr>
             )
         })
@@ -45,7 +36,7 @@ const GroupesFormateur = () => {
                     <div className="col-lg">
                         <DashboardNavbar />
                         <div className="card-body">
-                            <h1>Liste des Groupes</h1>
+                            <h1>Groupes</h1>
                             <div className="table-responsive">
                                 <table className="table table-bordered" width="100%" cellSpacing={0}>
                                     <thead className="thead-dark">
@@ -53,7 +44,6 @@ const GroupesFormateur = () => {
                                             <th scope="col">Designation</th>
                                             <th scope="col">Annee</th>
                                             <th scope="col">Filier</th>
-                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

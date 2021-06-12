@@ -26,6 +26,7 @@ import Affectations from '../Components/admin/Affectations';
 import AddAffectation from '../Components/admin/Affectations/AddAffectation';
 import UpdateAffectation from '../Components/admin/Affectations/UpdateAffectation';
 import GroupesFormateur from '../Components/formateur/Groupes';
+import StagiairesFormateur from '../Components/formateur/Stagiaires';
 
  const Routes = () => {
     return (
@@ -67,6 +68,7 @@ import GroupesFormateur from '../Components/formateur/Groupes';
 
                 {/*Formateur*/}
                 <Route path="/formateur/groupes" exact component={GroupesFormateur} />
+                <Route path="/formateur/stagiaires" exact component={StagiairesFormateur} />
 
                 <Route path="*" exact component={Home} />
             </Switch>
