@@ -2,7 +2,8 @@ import React from 'react';
 import { Route  , Switch} from 'react-router-dom'
 import Login from "../Components/login"
 import Home from "../Components/Home"
-import Dashboard from '../Components/admin/Dashboard';
+import AdminDashboard from '../Components/admin/Dashboard';
+import FormateurDashboard from '../Components/formateur/Dashboard';
 import Absences from '../Components/admin/Absences';
 import AddAbsence from '../Components/admin/Absences/addAbsence';
 import UpdateAbsence from '../Components/admin/Absences/updateAbsence';
@@ -31,7 +32,9 @@ import UpdateAffectation from '../Components/admin/Affectations/UpdateAffectatio
             <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/login" exact component={Login} />
-                <Route path="/admin/dashboard" exact component={Dashboard} />
+
+                <Route path="/admin/dashboard" exact component={AdminDashboard} />
+                <Route path="/formateur/dashboard" exact component={FormateurDashboard} />
 
                 <Route path="/admin/absences" exact component={Absences} />
                 <Route path="/admin/absences/create" exact component={AddAbsence} />
@@ -60,6 +63,8 @@ import UpdateAffectation from '../Components/admin/Affectations/UpdateAffectatio
                 <Route path="/admin/affectations" exact component={Affectations} />
                 <Route path="/admin/affectations/create" exact component={AddAffectation} />
                 <Route path="/admin/affectations/:id_affectation/update" exact component={UpdateAffectation} />
+
+                {/*Formateur*/}
 
                 <Route path="*" exact component={Home} />
             </Switch>

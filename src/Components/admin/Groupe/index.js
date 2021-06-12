@@ -45,11 +45,11 @@ const Groupes = () => {
                     <td>
                         <Link
                             to={"/admin/groupes/" + _id + "/update"}
-                            className="form-control btn btn-warning"
+                            className="btn btn-warning"
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="form-control btn btn-danger" onClick={() => { deleteGroupe(_id) }}>Supprimer</button>
+                        <button type="button" className="btn btn-danger" onClick={() => { deleteGroupe(_id) }}>Supprimer</button>
                     </td>
                 </tr>
             )

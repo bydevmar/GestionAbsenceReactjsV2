@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import DashboardNavbar from './DashboardNavbar';
 
 
-const AdminDashboard = () => {
+const FormateurDashboard = () => {
     const isLogged = useSelector(state => state.auth.isLogged);
     
 
@@ -128,4 +128,4 @@ const AdminDashboard = () => {
     );
 }
 
-export default AdminDashboard;
+export default FormateurDashboard;
