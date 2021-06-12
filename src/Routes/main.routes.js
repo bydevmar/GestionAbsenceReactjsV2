@@ -25,6 +25,7 @@ import UpdateNiveau from '../Components/admin/Niveaux/UpdateNiveau';
 import Affectations from '../Components/admin/Affectations';
 import AddAffectation from '../Components/admin/Affectations/AddAffectation';
 import UpdateAffectation from '../Components/admin/Affectations/UpdateAffectation';
+import GroupesFormateur from '../Components/formateur/Groupes';
 
  const Routes = () => {
     return (
@@ -65,6 +66,7 @@ import UpdateAffectation from '../Components/admin/Affectations/UpdateAffectatio
                 <Route path="/admin/affectations/:id_affectation/update" exact component={UpdateAffectation} />
 
                 {/*Formateur*/}
+                <Route path="/formateur/groupes" exact component={GroupesFormateur} />
 
                 <Route path="*" exact component={Home} />
             </Switch>
