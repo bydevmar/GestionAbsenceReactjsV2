@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import { Redirect } from 'react-router'
 import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
 import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
-import { putAbsenceByAdmin } from '../../../helpers/Admin/Absences/putAbsenceByAdmin';
+import { putAbsence } from '../../../helpers/Absences/putAbsence';
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
 import { useDispatch } from "react-redux";
@@ -48,7 +48,7 @@ function UpdateAbsence() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        putAbsenceByAdmin("609a93614f29bc1bbc6ea128", absenceToUpdate._id, stagiaire, formateur, dateAbsence, heureDebut, heureFin)
+        putAbsence("609a93614f29bc1bbc6ea128", absenceToUpdate._id, stagiaire, formateur, dateAbsence, heureDebut, heureFin)
             .then((result) => {
                 if (result.status === "OK") {
                     history.push("/admin/absences")
@@ -120,7 +120,6 @@ function UpdateAbsence() {
                                     <div className="form-group">
                                         <label htmlFor="dateabsence">date absence :</label><br />
                                         <input type="date"
-                                            max="2021-05-30"
                                             value={dateAbsence}
                                             onChange={(e) => setDateAbsence(e.target.value)}
                                         />

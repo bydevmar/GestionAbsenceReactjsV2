@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const getAllAbsencesByAdmin = (id_u) => {
+export const getAllAbsences = (id_u) => {
 
     return new Promise((resolve, reject) => {
         axios

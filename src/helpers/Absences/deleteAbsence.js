@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const deleteAbsenceByAdmin = ( id_utilisateur , id_absence ) => {
+export const deleteAbsence = ( id_utilisateur , id_absence ) => {
 
     return new Promise((resolve, reject) => {
         axios

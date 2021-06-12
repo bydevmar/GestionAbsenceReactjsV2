@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const postAbsenceByAdmin = ( gestionnaire , stagiaire , formateur , dateabsence , heuredebut , heurefin ) => {
+export const postAbsence = ( gestionnaire , stagiaire , formateur , dateabsence , heuredebut , heurefin ) => {
 
     return new Promise((resolve, reject) => {
         var data = JSON.stringify({

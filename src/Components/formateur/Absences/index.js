@@ -7,7 +7,7 @@ import { updateAbsenceAction } from '../../../actions/updateAbsence.action';
 import { useDispatch } from "react-redux";
 import moment from 'moment';
 
-const Absence = () => {
+const AbsenceFormateur = () => {
 
     const dispatch = useDispatch();
     const [absences, setAbsences] = useState([])
@@ -17,12 +17,12 @@ const Absence = () => {
     }, [])
 
     const loadData = () => {
-        getAllAbsences("609a93614f29bc1bbc6ea128").then((result) => {
+        getAllAbsences("6099e10b7ea02b34e4f75cbb").then((result) => {
             setAbsences(result.absences);
         });
     }
 
-    const deleteAbsencefun = (id_absence) => {
+    const deleteAbsences = (id_absence) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer cette absence!") === true) {
             deleteAbsence("609a93614f29bc1bbc6ea128", id_absence)
                 .then((resultat) => {
@@ -51,13 +51,13 @@ const Absence = () => {
                     <td> {moment(heurefin).format("HH:mm")}</td>
                     <td>
                         <Link
-                            to='/admin/absences/update'
+                            to='/formateur/absences/update'
                             className="form-control btn btn-warning"
                             onClick={() => { dispatch(updateAbsenceAction(item)) }}
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="form-control btn btn-danger" onClick={() => deleteAbsencefun(_id)}>Supprimer</button>
+                        <button type="button" className="form-control btn btn-danger" onClick={() => deleteAbsence(_id)}>Supprimer</button>
                     </td>
                 </tr>
             )
@@ -69,15 +69,15 @@ const Absence = () => {
                 <div className="row">
                     <div className="col-lg">
                         <DashboardNavbar />
+                        <div className="card-body">
                         <h1>Liste des Absences</h1>
                         <div className="container">
                             <Link
-                                to='/admin/absences/create'
+                                to="/formateur/absences/create"
                                 className="btn btn-primary btn-lg  mb-4">
                                 Ajouter absence
                             </Link>
                         </div>
-                        <div className="card-body">
                             <div className="table-responsive">
                                 <table className="table table-bordered" width="100%" cellSpacing={0}>
                                     <thead className="thead-dark">
@@ -108,4 +108,4 @@ const Absence = () => {
     )
 }
 
-export default Absence;
+export default AbsenceFormateur;

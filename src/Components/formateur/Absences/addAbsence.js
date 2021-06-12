@@ -3,15 +3,13 @@ import DashboardNavbar from '../Dashboard/DashboardNavbar'
 import { useSelector } from "react-redux"
 import { Redirect } from 'react-router'
 import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
-import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
 import { postAbsence } from '../../../helpers/Absences/postAbsence';
 import { useHistory } from "react-router-dom";
 
 
-function AddAbsence() {
+function AddAbsenceFormateur() {
     const isLogged = useSelector(state => state.auth.isLogged);
     const [stagiaires, setstagiaires] = useState([]);
-    const [formateurs, setformateurs] = useState([]);
 
     const [stagiaire, setstagiaire] = useState("");
     const [formateur, setformateur] = useState("");
@@ -22,16 +20,10 @@ function AddAbsence() {
     const history = useHistory();
 
     useEffect(() => {
-        getAllStagiaires("609a93614f29bc1bbc6ea128")
+        getAllStagiaires("6099e10b7ea02b34e4f75cbb")
             .then((result) => {
                 setstagiaires(result.stagiaires)
             })
-
-        getAllFormateurs()
-            .then((result) => {
-                setformateurs(result.formateurs)
-            })
-
     }, [])
 
     const remplirComboStagiaires = () => {
@@ -42,20 +34,12 @@ function AddAbsence() {
         })
     }
 
-    const remplirComboformateurs = () => {
-        return formateurs.map((item, index) => {
-            return (
-                <option value={item._id} key={index} >{item.nom + " " + item.prenom}</option>
-            )
-        })
-    }
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        postAbsence("609a93614f29bc1bbc6ea128", stagiaire, formateur, dateabsence, heureDebut, heureFin)
+        postAbsence("6099e10b7ea02b34e4f75cbb", stagiaire, "6099e10b7ea02b34e4f75cbb", dateabsence, heureDebut, heureFin)
             .then((result) => {
                 if (result.status === "OK") {
-                    history.push("/admin/absences")
+                    history.push("/formateur/absences")
                 }
                 else {
                     console.log(result.message);
@@ -81,7 +65,7 @@ function AddAbsence() {
                                     <div className="form-group ">
                                         <label htmlFor="stagiaire">stagiaire :</label><br />
                                         <select
-                                            className="form-select mb-3"
+                                            className="form-control mb-3"
                                             aria-label="stagiaire"
                                             onChange={(e) => setstagiaire(e.target.value)}
                                         >
@@ -93,29 +77,18 @@ function AddAbsence() {
                                     </div>
 
                                     <div className="form-group">
-                                        <label htmlFor="formateur">formateur :</label><br />
-                                        <select
-                                            className="form-select mb-3"
-                                            ria-label="formateur"
-                                            onChange={(e) => setformateur(e.target.value)}
-                                        >
-                                            <option  >Selectionner formateur</option>
-                                            {
-                                                remplirComboformateurs()
-                                            }
-                                        </select>
-                                    </div>
-
-                                    <div className="form-group">
                                         <label htmlFor="dateabsence">date absence :</label><br />
                                         <input type="date"
+                                            className="form-control"
                                             onChange={(e) => setdateabsence(e.target.value)}
                                         />
                                     </div>
 
                                     <div className="form-group">
                                         <label htmlFor="heuredebut">Heure debut :</label><br />
-                                        <input type="time"
+                                        <input
+                                            className="form-control" 
+                                            type="time"
                                             min="08:00"
                                             max="18:30"
                                             onChange={(e) => setheureDebut(e.target.value)}
@@ -124,7 +97,9 @@ function AddAbsence() {
 
                                     <div className="form-group">
                                         <label htmlFor="heurefin">Heure Fin :</label><br />
-                                        <input type="time"
+                                        <input 
+                                            className="form-control"
+                                            type="time"
                                             min="08:00"
                                             max="18:30"
                                             onChange={(e) => setheureFin(e.target.value)} />
@@ -144,5 +119,5 @@ function AddAbsence() {
     )
 }
 
-export default AddAbsence
+export default AddAbsenceFormateur;
 
