@@ -29,6 +29,7 @@ import GroupesFormateur from '../Components/formateur/Groupes';
 import StagiairesFormateur from '../Components/formateur/Stagiaires';
 import AbsenceFormateur from '../Components/formateur/Absences';
 import AddAbsenceFormateur from '../Components/formateur/Absences/addAbsence';
+import UpdateAbsenceFormateur from '../Components/formateur/Absences/updateAbsence';
 
  const Routes = () => {
     return (
@@ -73,6 +74,7 @@ import AddAbsenceFormateur from '../Components/formateur/Absences/addAbsence';
                 <Route path="/formateur/stagiaires" exact component={StagiairesFormateur} />
                 <Route path="/formateur/absences" exact component={AbsenceFormateur} />
                 <Route path="/formateur/absences/create" exact component={AddAbsenceFormateur} />
+                <Route path="/formateur/absences/:id_absence/update" exact component={UpdateAbsenceFormateur} />
 
                 <Route path="*" exact component={Home} />
             </Switch>

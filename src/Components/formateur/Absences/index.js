@@ -51,13 +51,13 @@ const AbsenceFormateur = () => {
                     <td> {moment(heurefin).format("HH:mm")}</td>
                     <td>
                         <Link
-                            to='/formateur/absences/update'
+                            to={"/formateur/absences/" + _id + "/update"}
                             className="form-control btn btn-warning"
                             onClick={() => { dispatch(updateAbsenceAction(item)) }}
                         >
                             Modifier
                         </Link>
-                        <button type="button" className="form-control btn btn-danger" onClick={() => deleteAbsence(_id)}>Supprimer</button>
+                        <button type="button" className="form-control btn btn-danger" onClick={() => deleteAbsences(_id)}>Supprimer</button>
                     </td>
                 </tr>
             )
