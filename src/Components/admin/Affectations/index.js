@@ -4,14 +4,14 @@ import { deleteAffectationByAdmin } from '../../../helpers/Admin/Affectations/de
 import { getAllAffectations } from '../../../helpers/getAllAffectationsByAdmin';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 
-const Affectations = () => {
+const Affectations = ({user}) => {
     const [affectations, setaffectations] = useState([])
     useEffect(() => {
         loadData()
     }, [])
 
     const loadData = () => {
-        getAllAffectations("609a93614f29bc1bbc6ea128")
+        getAllAffectations(user._id)
             .then((result) => {
                 setaffectations(result.details)
             }).catch(err => {
@@ -20,7 +20,7 @@ const Affectations = () => {
     }
     const deleteAffectation = (id_affectation) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer cette Affectation!") === true) {
-            deleteAffectationByAdmin("609a93614f29bc1bbc6ea128", id_affectation)
+            deleteAffectationByAdmin(user._id, id_affectation)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log(result.message);

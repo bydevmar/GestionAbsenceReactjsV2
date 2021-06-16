@@ -1,8 +1,6 @@
 import axios from "axios";
 
-
 export const getAllFormateurs = () => {
-
     return new Promise((resolve, reject) => {
         axios
         .get('http://127.0.0.1:3001/api/formateurs/609a93614f29bc1bbc6ea128')
@@ -11,4 +9,3 @@ export const getAllFormateurs = () => {
         })
     })
 }
-

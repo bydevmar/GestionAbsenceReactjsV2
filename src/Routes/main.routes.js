@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route  , Switch} from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Login from "../Components/login"
 import Home from "../Components/Home"
 import AdminDashboard from '../Components/admin/Dashboard';
@@ -30,55 +30,217 @@ import StagiairesFormateur from '../Components/formateur/Stagiaires';
 import AbsenceFormateur from '../Components/formateur/Absences';
 import AddAbsenceFormateur from '../Components/formateur/Absences/addAbsence';
 import UpdateAbsenceFormateur from '../Components/formateur/Absences/updateAbsence';
+import { useSelector } from 'react-redux';
 
- const Routes = () => {
-    return (
-        <div>
+
+
+const Routes = () => {
+    let user = useSelector(state => state.auth.user);
+    if (user.type === "Gestionnaire") {
+        return (
             <Switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/login" exact component={Login} />
+                {/*Admin dashboard*/}
 
-                <Route path="/admin/dashboard" exact component={AdminDashboard} />
-                <Route path="/formateur/dashboard" exact component={FormateurDashboard} />
+                <Route
+                    path="/admin/dashboard"
+                    exact
+                    render={() => <AdminDashboard user={user} />}
+                />
 
-                <Route path="/admin/absences" exact component={Absences} />
-                <Route path="/admin/absences/create" exact component={AddAbsence} />
-                <Route path="/admin/absences/update" exact component={UpdateAbsence} />
+                {/*Admin Absences*/}
 
-                <Route path="/admin/stagiaires" exact component={Stagiaires} />
-                <Route path="/admin/stagiaires/create" exact component={AddStagiaire} />
-                <Route path="/admin/stagiaires/update" exact component={UpdateStagiaire} />
+                <Route
+                    path="/admin/absences"
+                    exact
+                    render={() => <Absences user={user} />}
+                />
 
-                <Route path="/admin/formateurs" exact component={Formateurs} />
-                <Route path="/admin/formateurs/create" exact component={AddFormateur} />
-                <Route path="/admin/formateurs/:id_f/update" exact component={UpdateFormateur} />
+                <Route
+                    path="/admin/absences/create"
+                    exact
+                    render={() => <AddAbsence user={user} />}
+                />
 
-                <Route path="/admin/groupes" exact component={Groupes} />
-                <Route path="/admin/groupes/create" exact component={AddGroupe} />
-                <Route path="/admin/groupes/:id_g/update" exact component={UpdateGroupe} />
+                <Route
+                    path="/admin/absences/update"
+                    exact
+                    render={() => <UpdateAbsence user={user} />}
+                />
 
-                <Route path="/admin/filiers" exact component={Filiers} />
-                <Route path="/admin/filiers/create" exact component={AddFilier} />
-                <Route path="/admin/filiers/:id_filier/update" exact component={UpdateFilier} />
+                {/*Admin Formateurs*/}
 
-                <Route path="/admin/niveaux" exact component={Niveaux} />
-                <Route path="/admin/niveaux/create" exact component={AddNiveau} />
-                <Route path="/admin/niveaux/:id_niveau/update" exact component={UpdateNiveau} />
+                <Route
+                    path="/admin/stagiaires"
+                    exact
+                    render={() => <Stagiaires user={user} />}
+                />
 
-                <Route path="/admin/affectations" exact component={Affectations} />
-                <Route path="/admin/affectations/create" exact component={AddAffectation} />
-                <Route path="/admin/affectations/:id_affectation/update" exact component={UpdateAffectation} />
+                <Route
+                    path="/admin/stagiaires/create"
+                    exact
+                    render={() => <AddStagiaire user={user} />}
+                />
 
-                {/*Formateur*/}
-                <Route path="/formateur/groupes" exact component={GroupesFormateur} />
-                <Route path="/formateur/stagiaires" exact component={StagiairesFormateur} />
-                <Route path="/formateur/absences" exact component={AbsenceFormateur} />
-                <Route path="/formateur/absences/create" exact component={AddAbsenceFormateur} />
-                <Route path="/formateur/absences/:id_absence/update" exact component={UpdateAbsenceFormateur} />
+                <Route
+                    path="/admin/stagiaires/update"
+                    exact
+                    render={() => <UpdateStagiaire user={user} />}
+                />
+
+                {/*Admin Formateurs*/}
+
+                <Route
+                    path="/admin/formateurs"
+                    exact
+                    render={() => <Formateurs user={user} />}
+                />
+
+                <Route
+                    path="/admin/formateurs/create"
+                    exact
+                    render={() => <AddFormateur user={user} />}
+                />
+
+                <Route
+                    path="/admin/formateurs/:id_f/update"
+                    exact
+                    render={() => <UpdateFormateur user={user} />}
+                />
+
+                {/*Admin Groupes*/}
+
+                <Route
+                    path="/admin/groupes"
+                    exact
+                    render={() => <Groupes user={user} />}
+                />
+
+                <Route
+                    path="/admin/groupes/create"
+                    exact
+                    render={() => <AddGroupe user={user} />}
+                />
+
+                <Route
+                    path="/admin/groupes/:id_g/update"
+                    exact
+                    render={() => <UpdateGroupe user={user} />}
+                />
+
+                {/*Admin Filiers*/}
+
+                <Route
+                    path="/admin/filiers"
+                    exact
+                    render={() => <Filiers user={user} />}
+                />
+
+                <Route
+                    path="/admin/filiers/create"
+                    exact
+                    render={() => <AddFilier user={user} />}
+                />
+
+                <Route
+                    path="/admin/filiers/:id_filier/update"
+                    exact
+                    render={() => <UpdateFilier user={user} />}
+                />
+
+                {/*Admin Niveau*/}
+
+                <Route
+                    path="/admin/niveaux"
+                    exact
+                    render={() => <Niveaux user={user} />}
+                />
+
+                <Route
+                    path="/admin/niveaux/create"
+                    exact
+                    render={() => <AddNiveau user={user} />}
+                />
+
+                <Route
+                    path="/admin/niveaux/:id_niveau/update"
+                    exact
+                    render={() => <UpdateNiveau user={user} />}
+                />
+
+                {/*Admin Affectations*/}
+
+                <Route
+                    path="/admin/affectations"
+                    exact
+                    render={() => <Affectations user={user} />}
+                />
+
+                <Route
+                    path="/admin/affectations/create"
+                    exact
+                    render={() => <AddAffectation user={user} />}
+                />
+
+                <Route
+                    path="/admin/affectations/:id_affectation/update"
+                    exact
+                    render={() => <UpdateAffectation user={user} />}
+                />
 
                 <Route path="*" exact component={Home} />
+
             </Switch>
-        </div>
+        )
+    } else if (user.type === "Formateur") {
+        return (
+            <Switch>
+                {/*Formateur*/}
+                <Route
+                    path="/formateur/dashboard"
+                    exact
+                    render={() => <FormateurDashboard user={user} />}
+                />
+
+                <Route
+                    path="/formateur/groupes"
+                    exact
+                    render={() => <GroupesFormateur user={user} />}
+                />
+
+                <Route
+                    path="/formateur/stagiaires"
+                    exact
+                    render={() => <StagiairesFormateur user={user} />}
+                />
+
+                <Route
+                    path="/formateur/absences"
+                    exact
+                    render={() => <AbsenceFormateur user={user} />}
+                />
+
+                <Route
+                    path="/formateur/absences/create"
+                    exact
+                    render={() => <AddAbsenceFormateur user={user} />}
+                />
+
+                <Route
+                    path="/formateur/absences/:id_absence/update"
+                    exact
+                    render={() => <UpdateAbsenceFormateur user={user} />}
+                />
+
+                <Route path="*" exact component={Home} />
+
+            </Switch>
+        )
+    }
+    return (
+        <Switch>
+            <Route path="/login" exact component={Login} />
+            <Route path="*" exact component={Home} />
+        </Switch>
     )
 }
 export default Routes

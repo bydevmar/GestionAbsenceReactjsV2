@@ -10,7 +10,7 @@ import moment from 'moment';
 import { useDispatch } from "react-redux";
 import { deleteAbsenceToUpdateAction } from '../../../actions/updateAbsence.action';
 
-function UpdateAbsence() {
+function UpdateAbsence({user}) {
     const isLogged = useSelector(state => state.auth.isLogged);
     const absenceToUpdate = useSelector(state => state.updateAbsence.absenceToUpdate);
     const [stagiaires, setstagiaires] = useState([]);
@@ -29,7 +29,7 @@ function UpdateAbsence() {
         if (!absenceToUpdate.stagiaire)
             return history.push("/admin/absences")
 
-        getAllStagiaires("609a93614f29bc1bbc6ea128")
+        getAllStagiaires(user._id)
             .then((result) => {
                 setstagiaires(result.stagiaires)
             })
@@ -48,7 +48,7 @@ function UpdateAbsence() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        putAbsence("609a93614f29bc1bbc6ea128", absenceToUpdate._id, stagiaire, formateur, dateAbsence, heureDebut, heureFin)
+        putAbsence(user._id, absenceToUpdate._id, stagiaire, formateur, dateAbsence, heureDebut, heureFin)
             .then((result) => {
                 if (result.status === "OK") {
                     history.push("/admin/absences")

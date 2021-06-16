@@ -5,7 +5,7 @@ import { Redirect, useHistory, useParams } from 'react-router';
 import { getNiveauByAdmin } from '../../../helpers/getNiveauByAdmin';
 import { putNiveauByAdmin } from '../../../helpers/Admin/Niveaux/putNiveauByAdmin';
 
-const UpdateNiveau = () => {
+const UpdateNiveau = ({user}) => {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
@@ -15,7 +15,7 @@ const UpdateNiveau = () => {
     const history = useHistory()
 
     useEffect(() => {
-       getNiveauByAdmin("609a93614f29bc1bbc6ea128",id_niveau,designation)
+       getNiveauByAdmin(user._id,id_niveau,designation)
         .then(result => {
             if(result.status === "OK"){
                 setdesignation(result.details.designation)
@@ -29,7 +29,7 @@ const UpdateNiveau = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (window.confirm("êtes-vous sûr de vouloir midifier ce niveau!") === true){
-            putNiveauByAdmin("609a93614f29bc1bbc6ea128",id_niveau, designation)
+            putNiveauByAdmin(user._id,id_niveau, designation)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);

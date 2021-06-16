@@ -8,7 +8,7 @@ import { getAllNiveaux } from '../../../helpers/getAllNiveaux'
 import { postFilierByAdmin } from '../../../helpers/Admin/Filiers/postFilierByAdmin'
 
 
-function AddFilier() {
+function AddFilier({user}) {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
@@ -19,7 +19,7 @@ function AddFilier() {
     const history = useHistory()
 
     useEffect(() => {
-        getAllNiveaux("609a93614f29bc1bbc6ea128")
+        getAllNiveaux(user._id)
         .then(result =>{
             setniveaux(result)
         })
@@ -29,7 +29,7 @@ function AddFilier() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (window.confirm("êtes-vous sûr de vouloir ajouter cette filier!") === true){
-            postFilierByAdmin("609a93614f29bc1bbc6ea128", designation , niveau)
+            postFilierByAdmin(user._id, designation , niveau)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);

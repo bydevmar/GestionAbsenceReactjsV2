@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import { Redirect, useHistory } from 'react-router'
 import { postNiveau } from '../../../helpers/Admin/Niveaux/postNiveauByAdmin'
 
-function AddNiveau() {
+function AddNiveau({user}) {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
@@ -18,7 +18,7 @@ function AddNiveau() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (window.confirm("êtes-vous sûr de vouloir ajouter ce niveau!") === true){
-            postNiveau("609a93614f29bc1bbc6ea128", designation)
+            postNiveau(user._id, designation)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);

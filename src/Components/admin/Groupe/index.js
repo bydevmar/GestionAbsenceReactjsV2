@@ -4,21 +4,21 @@ import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllGroupes } from '../../../helpers/getAllGroupes';
 import { deleteGroupeByAdmin } from '../../../helpers/Admin/groupes/deleteGroupeByAdmin';
 
-const Groupes = () => {
+const Groupes = ({user}) => {
     const [groupes, setgroupes] = useState([])
     useEffect(() => {
         loadData()
     }, [])
 
     const loadData = () => {
-        getAllGroupes("609a93614f29bc1bbc6ea128")
+        getAllGroupes(user._id)
             .then((result) => {
                 setgroupes(result.groupes);
             })
     }
     const deleteGroupe = (id_groupe) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer ce groupe!") === true) {
-            deleteGroupeByAdmin("609a93614f29bc1bbc6ea128", id_groupe)
+            deleteGroupeByAdmin(user._id, id_groupe)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log("supprmé avec succes");

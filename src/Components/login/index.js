@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom"
 const { fetchUserFromApi } = require("../../helpers/fetchUserFromApi");
 
 
-const Login = () => {
+const Login = ({user}) => {
     const isLogged = useSelector(state => state.auth.isLogged)
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
@@ -26,7 +26,10 @@ const Login = () => {
                         user: result.user,
                         isLogged : true
                     }, { expires: 1 / 72 })
-                    history.push("/admin/dashboard")
+                    if(result.user.type === "Gestionnaire")
+                        history.push("/admin/dashboard")
+                    else if(result.user.type === "Formateur")
+                        history.push("/formateur/dashboard")
                 }
                 else {
                     console.log("error login");

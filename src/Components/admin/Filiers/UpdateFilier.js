@@ -8,7 +8,7 @@ import { putFilierByAdmin } from '../../../helpers/Admin/Filiers/putFilierByAdmi
 
 
 
-function UpdateFilier() {
+function UpdateFilier({user}) {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
@@ -21,11 +21,11 @@ function UpdateFilier() {
     const history = useHistory()
 
     useEffect(() => {
-        getAllNiveaux("609a93614f29bc1bbc6ea128")
+        getAllNiveaux(user._id)
         .then(result =>{
             setniveaux(result)
         })
-        getFilierByAdmin("609a93614f29bc1bbc6ea128",id_filier,designation,niveau)
+        getFilierByAdmin(user._id,id_filier,designation,niveau)
         .then(result => {
             if(result.status === "OK"){
                 setdesignation(result.details.designation)
@@ -40,7 +40,7 @@ function UpdateFilier() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (window.confirm("êtes-vous sûr de vouloir midifier cette filier!") === true){
-            putFilierByAdmin("609a93614f29bc1bbc6ea128",id_filier, designation , niveau)
+            putFilierByAdmin(user._id,id_filier, designation , niveau)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);

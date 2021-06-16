@@ -6,7 +6,7 @@ import { getAllFiliers } from '../../../helpers/getAllFiliersByAdmin'
 import { getGroupeByAdmin } from '../../../helpers/getGroupeByAdmin'
 import { putGroupeByAdmin } from '../../../helpers/Admin/groupes/putGroupeByAdmin'
 
-function UpdateGroupe() {
+function UpdateGroupe({user}) {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
@@ -19,11 +19,11 @@ function UpdateGroupe() {
     const {id_g} = useParams();
 
     useEffect(() => {
-        getAllFiliers("609a93614f29bc1bbc6ea128")
+        getAllFiliers(user._id)
         .then(result =>{
             setfiliers(result.details)
         })
-        getGroupeByAdmin("609a93614f29bc1bbc6ea128",id_g)
+        getGroupeByAdmin(user._id,id_g)
         .then(result =>{
             
             if(result.status === "OK"){
@@ -47,7 +47,7 @@ function UpdateGroupe() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (window.confirm("êtes-vous sûr de vouloir modifier ce groupe!") === true){
-            putGroupeByAdmin("609a93614f29bc1bbc6ea128",id_g, designation , annee , filier)
+            putGroupeByAdmin(user._id,id_g, designation , annee , filier)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);

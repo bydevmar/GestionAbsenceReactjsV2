@@ -8,7 +8,7 @@ import { useHistory, useParams } from "react-router-dom";
 import moment from 'moment';
 import { getAbsenceByAdmin } from '../../../helpers/Absences/getAbsenceById';
 
-function UpdateAbsence() {
+function UpdateAbsence({user}) {
     const isLogged = useSelector(state => state.auth.isLogged);
     const [stagiaires, setstagiaires] = useState([]);
 
@@ -21,11 +21,11 @@ function UpdateAbsence() {
     let history = useHistory();
 
     useEffect(() => {
-        getAllStagiaires("6099e10b7ea02b34e4f75cbb")
+        getAllStagiaires(user._id)
             .then((result) => {
                 setstagiaires(result.stagiaires)
             })
-        getAbsenceByAdmin("6099e10b7ea02b34e4f75cbb",id_absence)
+        getAbsenceByAdmin(user._id,id_absence)
         .then(result=>{
             if(result.status === "OK"){
                 setstagiaire(result.details.stagiaire)
@@ -42,7 +42,7 @@ function UpdateAbsence() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        putAbsence("6099e10b7ea02b34e4f75cbb", id_absence , stagiaire , "6099e10b7ea02b34e4f75cbb", dateAbsence, heureDebut, heureFin)
+        putAbsence(user._id, id_absence , stagiaire , user._id, dateAbsence, heureDebut, heureFin)
             .then((result) => {
                 if (result.status === "OK") {
                     history.push("/formateur/absences")

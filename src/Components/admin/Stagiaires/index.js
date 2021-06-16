@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { updateStagiaireAction } from '../../../actions/updateStagiaire.action'
 import { deleteStagiaireByAdmin } from '../../../helpers/Admin/Stagiaires/deleteStagiaireByAdmin';
 
-const Stagiaires = () => {
+const Stagiaires = ({user}) => {
     const [stagiaires, setStagiaires] = useState([])
     const dispatch = useDispatch();
 
@@ -15,7 +15,7 @@ const Stagiaires = () => {
     }, [])
 
     const loadData = () => {
-        getAllStagiaires("609a93614f29bc1bbc6ea128")
+        getAllStagiaires(user._id)
             .then((result) => {
                 setStagiaires(result.stagiaires)
             })
@@ -23,7 +23,7 @@ const Stagiaires = () => {
 
     const deleteStagiaire = (id_stagiaire) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer ce stagiaire!") === true) {
-            deleteStagiaireByAdmin("609a93614f29bc1bbc6ea128", id_stagiaire)
+            deleteStagiaireByAdmin(user._id, id_stagiaire)
                 .then((resultat) => {
                     console.log(resultat.data.message);
                     loadData();

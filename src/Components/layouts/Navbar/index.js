@@ -2,17 +2,29 @@
 import { Link, Redirect } from 'react-router-dom';
 import React from 'react'
 import Cookies from 'js-cookie';
-import {useSelector,useDispatch} from "react-redux"
-import {signOffAction} from "../../../actions/authActions"
+import { useSelector, useDispatch } from "react-redux"
+import { signOffAction } from "../../../actions/authActions"
 
-export default function Navbar() {
+export default function Navbar({ user }) {
     const dispatch = useDispatch()
     const logOut = () => {
         Cookies.remove('logged')
         dispatch(signOffAction())
-        return <Redirect to="login"/>
+        return <Redirect to="login" />
     }
     const islogged = useSelector(state => state.auth.isLogged)
+    const goToDashboard = () => {
+        if (user.type === "Gestionnaire")
+            return (
+                <Link className="nav-link" to="/admin/dashboard">
+                    DASHBOARD
+                </Link>)
+        else if (user.type === "Formateur")
+            return (
+                <Link className="nav-link" to="/formateur/dashboard">
+                    DASHBOARD
+                </Link>)
+    }
 
     return (
         <div>
@@ -53,10 +65,12 @@ export default function Navbar() {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/admin/dashboard">
-                                            {islogged ? "DASHBOARD" : ""}
-                                        </Link>
+                                        {
+                                            goToDashboard()
+                                        }
                                     </li>
+
+
                                     <li className="nav-item" onClick={logOut}>
                                         <Link className="nav-link" to="/login" >
                                             {islogged ? "LOGOUT" : ""}
@@ -71,5 +85,3 @@ export default function Navbar() {
         </div>
     )
 }
-
-

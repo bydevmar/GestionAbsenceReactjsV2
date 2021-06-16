@@ -4,14 +4,14 @@ import { deleteNiveauByAdmin } from '../../../helpers/Admin/Niveaux/deleteNiveau
 import { getAllNiveaux } from '../../../helpers/getAllNiveaux';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 
-const Niveaux = () => {
+const Niveaux = ({user}) => {
     const [Niveaux, setNiveaux] = useState([])
     useEffect(() => {
         loadData()
     }, [])
 
     const loadData = () => {
-        getAllNiveaux("609a93614f29bc1bbc6ea128")
+        getAllNiveaux(user._id)
             .then((niveaux) => {
                 setNiveaux(niveaux)
             }).catch(err => {
@@ -20,7 +20,7 @@ const Niveaux = () => {
     }
     const deleteNiveau = (id_niveau) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer ce niveau!") === true) {
-            deleteNiveauByAdmin("609a93614f29bc1bbc6ea128", id_niveau)
+            deleteNiveauByAdmin(user._id, id_niveau)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log("supprmé avec succes");

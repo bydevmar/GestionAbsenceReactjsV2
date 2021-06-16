@@ -3,7 +3,7 @@ import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
 import { getAllGroupes } from '../../../helpers/getAllGroupes';
 
-const StagiairesFormateur = () => {
+const StagiairesFormateur = ({user}) => {
     const [stagiaires, setStagiaires] = useState([])
     const [groupes, setgroupes] = useState([])
 
@@ -12,11 +12,11 @@ const StagiairesFormateur = () => {
     }, [])
 
     const loadData = () => {
-        getAllStagiaires("6099e10b7ea02b34e4f75cbb")
+        getAllStagiaires(user._id)
             .then((result) => {
                 setStagiaires(result.stagiaires)
             })
-        getAllGroupes("6099e10b7ea02b34e4f75cbb")
+        getAllGroupes(user._id)
         .then((result) => {
             setgroupes(result.groupes);
         })
@@ -24,12 +24,12 @@ const StagiairesFormateur = () => {
 
     const setStagiaireGroupe = (group) => {
         if(group !== "Selectionner un Groupe"){
-            getAllStagiaires("6099e10b7ea02b34e4f75cbb")
+            getAllStagiaires(user._id)
             .then((result) => {
                 setStagiaires(result.stagiaires.filter(stagiaire => stagiaire.idgroupe === group))
             })
         }else{
-            getAllStagiaires("6099e10b7ea02b34e4f75cbb")
+            getAllStagiaires(user._id)
             .then((result) => {
                 setStagiaires(result.stagiaires)
             })

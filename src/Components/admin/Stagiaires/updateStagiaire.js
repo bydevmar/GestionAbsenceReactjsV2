@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {deleteStagiaireToUpdateAction} from '../../../actions/updateStagiaire.action'
 
- const UpdateStagiaire = () => {
+ const UpdateStagiaire = ({user}) => {
     const isLogged = useSelector(state => state.auth.isLogged);
     const stagiaireToUpdate = useSelector(state => state.updateStagiaire.stagiaireToUpdate);
 
@@ -28,7 +28,7 @@ import {deleteStagiaireToUpdateAction} from '../../../actions/updateStagiaire.ac
         if (!stagiaireToUpdate.numinscription)
             return history.push("/admin/stagiaires")
             
-        getAllGroupes("609a93614f29bc1bbc6ea128")
+        getAllGroupes(user._id)
             .then((result) => {
                 setgroupes(result.groupes);
             })
@@ -51,7 +51,7 @@ import {deleteStagiaireToUpdateAction} from '../../../actions/updateStagiaire.ac
         e.preventDefault();
         if (window.confirm("Press a button!") === true) {
             putStagiaireByAdmin(
-                "609a93614f29bc1bbc6ea128",
+                user._id,
                 stagiaireToUpdate._id,
                 numinscription,
                 nom,

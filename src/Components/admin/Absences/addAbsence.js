@@ -8,7 +8,7 @@ import { postAbsence } from '../../../helpers/Absences/postAbsence';
 import { useHistory } from "react-router-dom";
 
 
-function AddAbsence() {
+function AddAbsence({user}) {
     const isLogged = useSelector(state => state.auth.isLogged);
     const [stagiaires, setstagiaires] = useState([]);
     const [formateurs, setformateurs] = useState([]);
@@ -22,7 +22,7 @@ function AddAbsence() {
     const history = useHistory();
 
     useEffect(() => {
-        getAllStagiaires("609a93614f29bc1bbc6ea128")
+        getAllStagiaires(user._id)
             .then((result) => {
                 setstagiaires(result.stagiaires)
             })
@@ -52,7 +52,7 @@ function AddAbsence() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        postAbsence("609a93614f29bc1bbc6ea128", stagiaire, formateur, dateabsence, heureDebut, heureFin)
+        postAbsence(user._id, stagiaire, formateur, dateabsence, heureDebut, heureFin)
             .then((result) => {
                 if (result.status === "OK") {
                     history.push("/admin/absences")

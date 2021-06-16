@@ -4,14 +4,14 @@ import { deleteFilierByAdmin } from '../../../helpers/Admin/Filiers/deleteFilier
 import { getAllFiliers } from '../../../helpers/getAllFiliersByAdmin';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 
-const Filiers = () => {
+const Filiers = ({user}) => {
     const [filiers, setfiliers] = useState([])
     useEffect(() => {
         loadData()
     }, [])
 
     const loadData = () => {
-        getAllFiliers("609a93614f29bc1bbc6ea128")
+        getAllFiliers(user._id)
             .then((result) => {
                 setfiliers(result.details)
             }).catch(err => {
@@ -21,7 +21,7 @@ const Filiers = () => {
 
     const deleteFilier = (id_filier) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer cette filier!") === true) {
-            deleteFilierByAdmin("609a93614f29bc1bbc6ea128", id_filier)
+            deleteFilierByAdmin(user._id, id_filier)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log("supprmé avec succes");

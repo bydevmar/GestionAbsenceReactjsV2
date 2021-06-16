@@ -4,7 +4,7 @@ import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllFormateurs } from "../../../helpers/getAllFormateurs"
 import { deleteFormateurByAdmin } from "../../../helpers/Admin/Formateur/deleteFormateurByAdmin"
 
-const Formateurs = () => {
+const Formateurs = ({user}) => {
     const [formateurs, setformateurs] = useState([])
     const history = useHistory();
     useEffect(() => {
@@ -19,7 +19,7 @@ const Formateurs = () => {
     }
     const deleteFormateur = (id) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer ce Formateur!") === true) {
-            deleteFormateurByAdmin("609a93614f29bc1bbc6ea128", id)
+            deleteFormateurByAdmin(user._id, id)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log(result.message);

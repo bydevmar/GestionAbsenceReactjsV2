@@ -5,10 +5,7 @@ import { Redirect, useHistory } from 'react-router'
 import {postGroupe} from "../../../helpers/Admin/groupes/postGroupeByAdmin"
 import { getAllFiliers } from '../../../helpers/getAllFiliersByAdmin'
 
-
-
-
-function AddGroupe() {
+function AddGroupe({user}) {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
@@ -20,7 +17,7 @@ function AddGroupe() {
     const history = useHistory()
 
     useEffect(() => {
-        getAllFiliers("609a93614f29bc1bbc6ea128")
+        getAllFiliers(user._id)
         .then(result =>{
             setfiliers(result.details)
         })
@@ -30,7 +27,7 @@ function AddGroupe() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (window.confirm("êtes-vous sûr de vouloir ajouter ce groupe!") === true){
-            postGroupe("609a93614f29bc1bbc6ea128", designation , annee , filier)
+            postGroupe(user._id, designation , annee , filier)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);

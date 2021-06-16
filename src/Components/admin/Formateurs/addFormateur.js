@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
-import { useSelector } from "react-redux"
-import { Redirect, useHistory } from 'react-router'
+import {  useHistory } from 'react-router'
 import { postFormateur } from '../../../helpers/Admin/Formateur/postFormateurByAdmin';
 
-
-
-function AddFormateur() {
-    const isLogged = useSelector(state => state.auth.isLogged);
+function AddFormateur({user}) {
 
     const [email, setemail] = useState("");
     const [nom, setnom] = useState("");
@@ -19,17 +15,16 @@ function AddFormateur() {
 
     const history = useHistory()
 
-    useEffect(() => {
-
-    }, [])
-
     const handleSubmit = (e) => {
         e.preventDefault();
         if(motdepasse === confirmation){
-            postFormateur("609a93614f29bc1bbc6ea128", email , nom , prenom , matricule , cin , motdepasse)
+            console.log("yeeeeeeeeeeeeeeeeeeeeees");
+            postFormateur(user._id, email , nom , prenom , matricule , cin , motdepasse)
             .then(result => {
                 if (result.status === "OK") {
                     history.push("/admin/formateurs")
+                }else{
+                    console.log(result.message );
                 }
             })
             .catch(err => {
@@ -38,8 +33,6 @@ function AddFormateur() {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login" />
     return (
         <div>
             <div>
@@ -50,7 +43,6 @@ function AddFormateur() {
                             <div className="col-md-6">
                                 <h2 className="h2 pb-4">Ajouter un formateur</h2>
                                 <form className="form mt-4" onSubmit={(e) => handleSubmit(e)}>
-
                                     <div className="form-group">
                                         <label htmlFor="email">Email:</label><br />
                                         <input

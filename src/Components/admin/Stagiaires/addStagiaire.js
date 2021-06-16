@@ -6,7 +6,7 @@ import { getAllGroupes } from '../../../helpers/getAllGroupes';
 import { useHistory } from "react-router-dom";
 import {postStagiaire} from '../../../helpers/Admin/Stagiaires/postStagiaire';
 
-function AddStagiaire() {
+function AddStagiaire({user}) {
     const isLogged = useSelector(state => state.auth.isLogged);
     const [numinscription, setnuminscription] = useState("")
     const [nom, setnom] = useState("")
@@ -18,7 +18,7 @@ function AddStagiaire() {
     let history = useHistory();
 
     useEffect(() => {
-        getAllGroupes("609a93614f29bc1bbc6ea128")
+        getAllGroupes(user._id)
             .then((result) => {
                 setgroupes(result.groupes);
             })
@@ -26,7 +26,7 @@ function AddStagiaire() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        postStagiaire("609a93614f29bc1bbc6ea128",numinscription,nom,prenom,groupe)
+        postStagiaire(user._id,numinscription,nom,prenom,groupe)
         .then((result)=>{
             if(result.status === "OK"){
                 console.log(result);

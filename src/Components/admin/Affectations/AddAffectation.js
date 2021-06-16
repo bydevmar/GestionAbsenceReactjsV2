@@ -6,7 +6,7 @@ import { getAllGroupes } from '../../../helpers/getAllGroupes';
 import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
 import {postAffectation} from '../../../helpers/Admin/Affectations/postAffectationByAdmin'
 
-const AddAffectation = () => {
+const AddAffectation = ({user}) => {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [formateur, setformateur] = useState("");
@@ -18,11 +18,11 @@ const AddAffectation = () => {
     const history = useHistory()
 
     useEffect(() => {
-        getAllFormateurs("609a93614f29bc1bbc6ea128")
+        getAllFormateurs(user._id)
         .then(result =>{
             setformateurs(result.formateurs);
         })
-        getAllGroupes("609a93614f29bc1bbc6ea128")
+        getAllGroupes(user._id)
         .then(result =>{
             setgroupes(result.groupes)
         })
@@ -32,7 +32,7 @@ const AddAffectation = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (window.confirm("êtes-vous sûr de vouloir ajouter cette affectation!") === true){
-            postAffectation("609a93614f29bc1bbc6ea128",formateur , groupe)
+            postAffectation(user._id,formateur , groupe)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);

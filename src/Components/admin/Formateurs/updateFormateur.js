@@ -5,7 +5,7 @@ import { Redirect, useHistory, useParams } from 'react-router'
 import { putFormateurByAdmin } from '../../../helpers/Admin/Formateur/putFormateurByAdmin';
 import { getFormateurByAdmin } from '../../../helpers/getFormateurByAdmin';
 
-function UpdateFormateur(props) {
+function UpdateFormateur({user}) {
     const history = useHistory();
     const isLogged = useSelector(state => state.auth.isLogged);
 
@@ -20,7 +20,7 @@ function UpdateFormateur(props) {
 
     const { id_f } = useParams()
     useEffect(() => {
-        getFormateurByAdmin("609a93614f29bc1bbc6ea128",id_f)
+        getFormateurByAdmin(user._id,id_f)
         .then(result =>{
             if(result.status === "OK"){
                 const formateur = result.details
@@ -42,7 +42,7 @@ function UpdateFormateur(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if( motdepasse === confirmation ){
-            putFormateurByAdmin("609a93614f29bc1bbc6ea128",formateur,email,nom ,prenom,matricule,cin,motdepasse)
+            putFormateurByAdmin(user._id,formateur,email,nom ,prenom,matricule,cin,motdepasse)
             .then(result => {
                 if(result.status === "OK"){
                     history.push("/admin/formateurs")

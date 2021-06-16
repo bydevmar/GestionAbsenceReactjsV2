@@ -7,7 +7,7 @@ import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
 import {putAffectation, putAffectationByAdmin} from '../../../helpers/Admin/Affectations/putAffectationByAdmin'
 import { getAffectationByAdmin } from '../../../helpers/getAffectationByAdmin';
 
-const UpdateAffectation = () => {
+const UpdateAffectation = ({user}) => {
     const isLogged = useSelector(state => state.auth.isLogged);
 
     const [formateur, setformateur] = useState("");
@@ -21,15 +21,15 @@ const UpdateAffectation = () => {
     const history = useHistory()
 
     useEffect(() => {
-        getAllFormateurs("609a93614f29bc1bbc6ea128")
+        getAllFormateurs(user._id)
         .then(result =>{
             setformateurs(result.formateurs);
         })
-        getAllGroupes("609a93614f29bc1bbc6ea128")
+        getAllGroupes(user._id)
         .then(result =>{
             setgroupes(result.groupes)
         })
-        getAffectationByAdmin("609a93614f29bc1bbc6ea128",id_affectation)
+        getAffectationByAdmin(user._id,id_affectation)
         .then(result =>{
             if(result.status === "OK"){
                 const affectation = result.details;
@@ -42,7 +42,7 @@ const UpdateAffectation = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (window.confirm("êtes-vous sûr de vouloir modifier cette affectation!") === true){
-            putAffectationByAdmin("609a93614f29bc1bbc6ea128",id_affectation, formateur , groupe)
+            putAffectationByAdmin(user._id,id_affectation, formateur , groupe)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);

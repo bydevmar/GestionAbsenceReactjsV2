@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllGroupes } from '../../../helpers/getAllGroupes';
 
-const GroupesFormateur = () => {
+const GroupesFormateur = ({user}) => {
     const [groupes, setgroupes] = useState([])
     useEffect(() => {
         loadData()
     }, [])
 
     const loadData = () => {
-        getAllGroupes("6099e10b7ea02b34e4f75cbb")
+        getAllGroupes(user._id)
             .then((result) => {
                 console.log(result);
                 setgroupes(result.groupes);

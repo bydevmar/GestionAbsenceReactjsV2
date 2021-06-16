@@ -7,7 +7,7 @@ import { updateAbsenceAction } from '../../../actions/updateAbsence.action';
 import { useDispatch } from "react-redux";
 import moment from 'moment';
 
-const Absence = () => {
+const Absence = ({user}) => {
 
     const dispatch = useDispatch();
     const [absences, setAbsences] = useState([])
@@ -17,14 +17,14 @@ const Absence = () => {
     }, [])
 
     const loadData = () => {
-        getAllAbsences("609a93614f29bc1bbc6ea128").then((result) => {
+        getAllAbsences(user._id).then((result) => {
             setAbsences(result.absences);
         });
     }
 
     const deleteAbsencefun = (id_absence) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer cette absence!") === true) {
-            deleteAbsence("609a93614f29bc1bbc6ea128", id_absence)
+            deleteAbsence(user._id, id_absence)
                 .then((resultat) => {
                     console.log(resultat.data.message);
                     loadData();
