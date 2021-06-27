@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
-import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
-import { getAllGroupes } from '../../../helpers/getAllGroupes';
+import { getAllStagiaires } from '../../../helpers/Stagiaires/getAllStagiaires';
+import { getAllGroupes } from '../../../helpers/groupes/getAllGroupes';
 
 const StagiairesFormateur = ({user}) => {
-    const [stagiaires, setStagiaires] = useState([])
-    const [groupes, setgroupes] = useState([])
-
+    const [stagiaires, setStagiaires] = useState([]);
+    const [groupes, setgroupes] = useState([]);
+    
     useEffect(() => {
-        loadData()
-    }, [])
-
-    const loadData = () => {
         getAllStagiaires(user._id)
             .then((result) => {
                 setStagiaires(result.stagiaires)
@@ -20,7 +16,7 @@ const StagiairesFormateur = ({user}) => {
         .then((result) => {
             setgroupes(result.groupes);
         })
-    }
+    }, [user._id])
 
     const setStagiaireGroupe = (group) => {
         if(group !== "Selectionner un Groupe"){

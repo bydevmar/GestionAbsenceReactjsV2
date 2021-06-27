@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
-import { getAllGroupes } from '../../../helpers/getAllGroupes';
+import { getAllGroupes } from '../../../helpers/groupes/getAllGroupes';
 
 const GroupesFormateur = ({user}) => {
-    const [groupes, setgroupes] = useState([])
-    useEffect(() => {
-        loadData()
-    }, [])
 
-    const loadData = () => {
+    const [groupes, setgroupes] = useState([])
+
+    useEffect(() => {
         getAllGroupes(user._id)
             .then((result) => {
                 console.log(result);
                 setgroupes(result.groupes);
+            }).catch(err => {
+                setgroupes([]);
             })
-    }
+    }, [user._id])
+
+    
 
     const loadTable = () => {
         return groupes.map((item) => {

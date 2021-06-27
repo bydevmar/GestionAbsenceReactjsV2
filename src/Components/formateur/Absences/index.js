@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllAbsences } from "../../../helpers/Absences/getAllAbsences"
 import { deleteAbsence } from "../../../helpers/Absences/deleteAbsence";
@@ -10,24 +10,25 @@ import moment from 'moment';
 const AbsenceFormateur = ({user}) => {
 
     const dispatch = useDispatch();
-    const [absences, setAbsences] = useState([])
-
+    const [absences, setAbsences] = useState([]);
+    const history = useHistory();
+    
     useEffect(() => {
-        loadData()
-    }, [])
-
-    const loadData = () => {
-        getAllAbsences(user._id).then((result) => {
+        getAllAbsences(user._id)
+        .then((result) => {
             setAbsences(result.absences);
-        });
-    }
+        })
+        .catch((err) => console.log(err));
+    }, [user._id])
+
+   
 
     const deleteAbsences = (id_absence) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer cette absence!") === true) {
             deleteAbsence(user._id, id_absence)
                 .then((resultat) => {
                     console.log(resultat.data.message);
-                    loadData();
+                    history.push("/formateur/absences");
                 })
                 .catch((error) => {
                     console.log(error.data.message);

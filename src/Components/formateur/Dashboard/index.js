@@ -1,14 +1,8 @@
 import React from 'react';
-import { Redirect } from 'react-router';
-import { useSelector } from "react-redux"
 import DashboardNavbar from './DashboardNavbar';
 
 
 const FormateurDashboard = ({user}) => {
-    const isLogged = useSelector(state => state.auth.isLogged);
-    
-
-    if (!isLogged ) return <Redirect to="/login" />
     return (
         <div>
             <DashboardNavbar/>

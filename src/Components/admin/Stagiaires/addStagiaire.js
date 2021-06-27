@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import DashboardNavbar from '../Dashboard/DashboardNavbar';
-import { useSelector } from "react-redux";
-import { Redirect } from 'react-router';
-import { getAllGroupes } from '../../../helpers/getAllGroupes';
+import { getAllGroupes } from '../../../helpers/groupes/getAllGroupes';
 import { useHistory } from "react-router-dom";
-import {postStagiaire} from '../../../helpers/Admin/Stagiaires/postStagiaire';
+import {postStagiaire} from '../../../helpers/Stagiaires/postStagiaire';
 
 function AddStagiaire({user}) {
-    const isLogged = useSelector(state => state.auth.isLogged);
     const [numinscription, setnuminscription] = useState("")
     const [nom, setnom] = useState("")
     const [prenom, setprenom] = useState("")
@@ -22,7 +19,10 @@ function AddStagiaire({user}) {
             .then((result) => {
                 setgroupes(result.groupes);
             })
-    }, [])
+            .catch(function (error){
+                setgroupes([])
+            })
+    }, [user._id])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,8 +37,6 @@ function AddStagiaire({user}) {
         })
     }
 
-    if (!isLogged)
-        return <Redirect to="/login" />
     return (
         <div>
             <div>

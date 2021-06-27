@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
-import { useSelector } from "react-redux"
-import { Redirect, useHistory } from 'react-router'
-import {postGroupe} from "../../../helpers/Admin/groupes/postGroupeByAdmin"
-import { getAllFiliers } from '../../../helpers/getAllFiliersByAdmin'
-import { getAllNiveaux } from '../../../helpers/getAllNiveaux'
-import { postFilierByAdmin } from '../../../helpers/Admin/Filiers/postFilierByAdmin'
+import { useHistory } from 'react-router'
+import { getAllNiveaux } from '../../../helpers/Niveaux/getAllNiveaux'
+import { postFilierByAdmin } from '../../../helpers/Filiers/postFilierByAdmin'
 
 
 function AddFilier({user}) {
-    const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
     const [niveau, setniveau ] = useState("");
@@ -23,8 +19,11 @@ function AddFilier({user}) {
         .then(result =>{
             setniveaux(result)
         })
+        .catch(err => {
+            setniveaux([])
+        })
 
-    }, [])
+    }, [user._id])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -46,8 +45,7 @@ function AddFilier({user}) {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login"/>
+    
     return (
         <div>
             <div>

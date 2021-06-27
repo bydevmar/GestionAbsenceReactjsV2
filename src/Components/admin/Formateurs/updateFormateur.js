@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
-import { useSelector } from "react-redux"
-import { Redirect, useHistory, useParams } from 'react-router'
-import { putFormateurByAdmin } from '../../../helpers/Admin/Formateur/putFormateurByAdmin';
-import { getFormateurByAdmin } from '../../../helpers/getFormateurByAdmin';
+import { useHistory, useParams } from 'react-router'
+import { putFormateurByAdmin } from '../../../helpers/Formateur/putFormateurByAdmin';
+import { getFormateurByAdmin } from '../../../helpers/Formateur/getFormateurByAdmin';
 
 function UpdateFormateur({user}) {
     const history = useHistory();
-    const isLogged = useSelector(state => state.auth.isLogged);
 
     const [formateur, setformateur] = useState("");
     const [email, setemail] = useState("");
@@ -37,7 +35,7 @@ function UpdateFormateur({user}) {
         return () => {
             console.log("cleanUP!");
         }
-    }, [id_f])
+    }, [ user._id , id_f ])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -57,8 +55,6 @@ function UpdateFormateur({user}) {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login" />
     return (
         <div>
             <div>

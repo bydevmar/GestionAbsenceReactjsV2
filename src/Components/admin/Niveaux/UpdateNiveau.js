@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import DashboardNavbar from '../Dashboard/DashboardNavbar';
-import { useSelector } from "react-redux";
-import { Redirect, useHistory, useParams } from 'react-router';
-import { getNiveauByAdmin } from '../../../helpers/getNiveauByAdmin';
-import { putNiveauByAdmin } from '../../../helpers/Admin/Niveaux/putNiveauByAdmin';
+import { useHistory, useParams } from 'react-router';
+import { getNiveauByAdmin } from '../../../helpers/Niveaux/getNiveauByAdmin';
+import { putNiveauByAdmin } from '../../../helpers/Niveaux/putNiveauByAdmin';
 
 const UpdateNiveau = ({user}) => {
-    const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
 
@@ -24,7 +22,7 @@ const UpdateNiveau = ({user}) => {
         }).catch(err=> {
             console.log(err);
         })
-    }, [])
+    }, [user._id,id_niveau,designation])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -46,8 +44,7 @@ const UpdateNiveau = ({user}) => {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login"/>
+    
     return (
         <div>
             <div>

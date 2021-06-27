@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
-import { useSelector } from "react-redux"
-import { Redirect } from 'react-router'
-import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
+import { getAllStagiaires } from '../../../helpers/Stagiaires/getAllStagiaires';
 import { putAbsence } from '../../../helpers/Absences/putAbsence';
 import { useHistory, useParams } from "react-router-dom";
 import moment from 'moment';
 import { getAbsenceByAdmin } from '../../../helpers/Absences/getAbsenceById';
 
 function UpdateAbsence({user}) {
-    const isLogged = useSelector(state => state.auth.isLogged);
-    const [stagiaires, setstagiaires] = useState([]);
+    const [stagiaires, setStagiaires] = useState([]);
 
     const {id_absence} = useParams();
-    const [stagiaire, setstagiaire] = useState("");
+    const [stagiaire, setStagiaire] = useState("");
     const [dateAbsence, setDateAbsence] = useState("")
-    const [heureDebut, setheureDebut] = useState("")
+    const [heureDebut, setHeureDebut] = useState("")
     const [heureFin, setheureFin] = useState("");
 
     let history = useHistory();
@@ -23,21 +20,18 @@ function UpdateAbsence({user}) {
     useEffect(() => {
         getAllStagiaires(user._id)
             .then((result) => {
-                setstagiaires(result.stagiaires)
+                setStagiaires(result.stagiaires)
             })
         getAbsenceByAdmin(user._id,id_absence)
         .then(result=>{
             if(result.status === "OK"){
-                setstagiaire(result.details.stagiaire)
+                setStagiaire(result.details.stagiaire)
                 setDateAbsence(moment(result.details.dateabsence).format("YYYY-MM-DD"))
-                setheureDebut(moment(result.details.heuredebut).format("HH:mm"))
+                setHeureDebut(moment(result.details.heuredebut).format("HH:mm"))
                 setheureFin(moment(result.details.heurefin).format("HH:mm"))
             }
-        })
-            return () => {
-                console.log("unmounting");
-            }
-    },[])
+        });
+    },[user._id, id_absence])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -55,8 +49,6 @@ function UpdateAbsence({user}) {
             })
     }
 
-    if (!isLogged)
-        return <Redirect to="/login" />
     return (
         <div>
             <div>
@@ -72,7 +64,7 @@ function UpdateAbsence({user}) {
                                         <select
                                             className="form-control mb-3"
                                             aria-label="stagiaire"
-                                            onChange={(e) => setstagiaire(e.target.value)}
+                                            onChange={(e) => setStagiaire(e.target.value)}
                                             value={stagiaire}
                                         >
                                             <option>Selectionner stagiaire</option>
@@ -106,7 +98,7 @@ function UpdateAbsence({user}) {
                                             type="time"
                                             min="08:00"
                                             max="18:30"
-                                            onChange={(e) => setheureDebut(e.target.value)}
+                                            onChange={(e) => setHeureDebut(e.target.value)}
                                             value={heureDebut}
                                         />
                                     </div>

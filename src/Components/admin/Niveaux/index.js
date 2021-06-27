@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
-import { deleteNiveauByAdmin } from '../../../helpers/Admin/Niveaux/deleteNiveauByAdmin';
-import { getAllNiveaux } from '../../../helpers/getAllNiveaux';
+import { Link, useHistory } from "react-router-dom";
+import { getAllNiveaux } from '../../../helpers/Niveaux/getAllNiveaux';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
+import {deleteNiveauByAdmin} from "../../../helpers/Niveaux/deleteNiveauByAdmin"
 
 const Niveaux = ({user}) => {
-    const [Niveaux, setNiveaux] = useState([])
+    const [Niveaux, setNiveaux] = useState([]);
+    const history = useHistory();
     useEffect(() => {
-        loadData()
-    }, [])
-
-    const loadData = () => {
         getAllNiveaux(user._id)
             .then((niveaux) => {
                 setNiveaux(niveaux)
             }).catch(err => {
                 console.log(err);
             })
-    }
+    }, [user._id])
+
     const deleteNiveau = (id_niveau) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer ce niveau!") === true) {
             deleteNiveauByAdmin(user._id, id_niveau)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log("supprmé avec succes");
-                        loadData();
+                        history.push("/admin/niveaux");
                     }
                     else {
                         console.log("error lors de la suppression!");

@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import DashboardNavbar from '../Dashboard/DashboardNavbar';
-import { useSelector } from "react-redux";
-import { Redirect, useHistory } from 'react-router';
-import { getAllGroupes } from '../../../helpers/getAllGroupes';
-import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
-import {postAffectation} from '../../../helpers/Admin/Affectations/postAffectationByAdmin'
+import { useHistory } from 'react-router';
+import { getAllGroupes } from '../../../helpers/groupes/getAllGroupes';
+import { getAllFormateurs } from '../../../helpers/Formateur/getAllFormateurs';
+import { postAffectation } from '../../../helpers/Affectations/postAffectationByAdmin'
 
 const AddAffectation = ({user}) => {
-    const isLogged = useSelector(state => state.auth.isLogged);
 
     const [formateur, setformateur] = useState("");
     const [groupe, setgroupe ] = useState("");
 
-    const [formateurs, setformateurs ] = useState([]);
+    const [formateurs, setFormateurs ] = useState([]);
     const [groupes, setgroupes ] = useState([]);
     
     const history = useHistory()
@@ -20,14 +18,20 @@ const AddAffectation = ({user}) => {
     useEffect(() => {
         getAllFormateurs(user._id)
         .then(result =>{
-            setformateurs(result.formateurs);
+            setFormateurs(result.formateurs);
+        })
+        .catch(err => {
+            setFormateurs([])
         })
         getAllGroupes(user._id)
         .then(result =>{
             setgroupes(result.groupes)
         })
+        .catch(err => {
+            setgroupes([])
+        })
 
-    }, [])
+    }, [user._id])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -49,8 +53,6 @@ const AddAffectation = ({user}) => {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login"/>
     return (
         <div>
             <div>

@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
-import { deleteAffectationByAdmin } from '../../../helpers/Admin/Affectations/deleteAffectationByAdmin';
-import { getAllAffectations } from '../../../helpers/getAllAffectationsByAdmin';
+import { Link, useHistory } from "react-router-dom";
+import { deleteAffectationByAdmin } from '../../../helpers/Affectations/deleteAffectationByAdmin';
+import { getAllAffectations } from '../../../helpers/Affectations/getAllAffectationsByAdmin';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 
 const Affectations = ({user}) => {
     const [affectations, setaffectations] = useState([])
+    const history = useHistory();
     useEffect(() => {
-        loadData()
-    }, [])
-
-    const loadData = () => {
         getAllAffectations(user._id)
             .then((result) => {
                 setaffectations(result.details)
             }).catch(err => {
                 console.log(err);
             })
-    }
+    }, [user._id])
+
     const deleteAffectation = (id_affectation) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer cette Affectation!") === true) {
             deleteAffectationByAdmin(user._id, id_affectation)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log(result.message);
-                        loadData();
+                        history.push("/admin/affectations")
                     }
                     else {
                         console.log("error lors de la suppression!");

@@ -3,31 +3,27 @@ import { Link } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 import { getAllAbsences } from "../../../helpers/Absences/getAllAbsences"
 import { deleteAbsence } from "../../../helpers/Absences/deleteAbsence";
-import { updateAbsenceAction } from '../../../actions/updateAbsence.action';
-import { useDispatch } from "react-redux";
 import moment from 'moment';
 
 const Absence = ({user}) => {
 
-    const dispatch = useDispatch();
     const [absences, setAbsences] = useState([])
 
     useEffect(() => {
-        loadData()
-    }, [])
-
-    const loadData = () => {
-        getAllAbsences(user._id).then((result) => {
+        getAllAbsences(user._id)
+        .then((result) => {
             setAbsences(result.absences);
+        })
+        .catch(function (error){
+            console.log(error);
         });
-    }
+    }, [user._id] )
 
     const deleteAbsencefun = (id_absence) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer cette absence!") === true) {
             deleteAbsence(user._id, id_absence)
                 .then((resultat) => {
                     console.log(resultat.data.message);
-                    loadData();
                 })
                 .catch((error) => {
                     console.log(error.data.message);
@@ -37,7 +33,6 @@ const Absence = ({user}) => {
 
     const loadTable = () => {
         return absences.map((item) => {
-            //destructuring
             const { _id, numinscription, nom, prenom, designation, annee, dateabsence, heuredebut, heurefin } = item
             return (
                 <tr key={_id} >
@@ -51,9 +46,8 @@ const Absence = ({user}) => {
                     <td> {moment(heurefin).format("HH:mm")}</td>
                     <td>
                         <Link
-                            to='/admin/absences/update'
+                            to={"/admin/absences/"+_id+"/update"}
                             className="form-control btn btn-warning"
-                            onClick={() => { dispatch(updateAbsenceAction(item)) }}
                         >
                             Modifier
                         </Link>

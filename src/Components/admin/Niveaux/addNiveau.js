@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
-import { useSelector } from "react-redux"
-import { Redirect, useHistory } from 'react-router'
-import { postNiveau } from '../../../helpers/Admin/Niveaux/postNiveauByAdmin'
+import { useHistory } from 'react-router'
+import { postNiveau } from '../../../helpers/Niveaux/postNiveauByAdmin'
 
 function AddNiveau({user}) {
-    const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
     
@@ -36,8 +34,7 @@ function AddNiveau({user}) {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login"/>
+    
     return (
         <div>
             <div>

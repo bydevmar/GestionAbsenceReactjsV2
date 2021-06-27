@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
 import {  useHistory } from 'react-router'
-import { postFormateur } from '../../../helpers/Admin/Formateur/postFormateurByAdmin';
+import { postFormateur } from '../../../helpers/Formateur/postFormateurByAdmin';
 
 function AddFormateur({user}) {
 

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import "./Login.css"
-import { useDispatch , useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { signInAction , signOffAction} from "../../actions/authActions"
 import LoginForm from './LoginForm';
 import Cookies from 'js-cookie';
-import { Redirect } from 'react-router';
 import { useHistory } from "react-router-dom"
-const { fetchUserFromApi } = require("../../helpers/fetchUserFromApi");
-
+const { fetchUserFromApi } = require("../../helpers/login/fetchUserFromApi");
 
 const Login = ({user}) => {
-    const isLogged = useSelector(state => state.auth.isLogged)
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const dispatch = useDispatch()
@@ -47,7 +44,6 @@ const Login = ({user}) => {
     const onChangePassword = (e) => {
         setUserPassword(e.target.value)
     }
-    if (isLogged ) return <Redirect to="/admin/dashboard" />
     return (
         <div>
             <LoginForm

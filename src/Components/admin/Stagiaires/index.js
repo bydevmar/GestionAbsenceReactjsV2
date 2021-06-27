@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
-import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
-import { useDispatch } from "react-redux";
-import { updateStagiaireAction } from '../../../actions/updateStagiaire.action'
-import { deleteStagiaireByAdmin } from '../../../helpers/Admin/Stagiaires/deleteStagiaireByAdmin';
+import { getAllStagiaires } from '../../../helpers/Stagiaires/getAllStagiaires';
+import { deleteStagiaireByAdmin } from '../../../helpers/Stagiaires/deleteStagiaireByAdmin';
 
 const Stagiaires = ({user}) => {
     const [stagiaires, setStagiaires] = useState([])
-    const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
-        loadData()
-    }, [])
-
-    const loadData = () => {
         getAllStagiaires(user._id)
             .then((result) => {
                 setStagiaires(result.stagiaires)
             })
-    }
+            .catch(err => {
+                console.log(err);
+            })
+    }, [user._id])
+
 
     const deleteStagiaire = (id_stagiaire) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer ce stagiaire!") === true) {
             deleteStagiaireByAdmin(user._id, id_stagiaire)
                 .then((resultat) => {
                     console.log(resultat.data.message);
-                    loadData();
+                    history.push("/admin/stagiaires");
                 })
                 .catch((error) => {
                     console.log(error);
@@ -48,9 +46,8 @@ const Stagiaires = ({user}) => {
 
                     <td>
                         <Link
-                            to={'/admin/stagiaires/update'}
+                            to={'/admin/stagiaires/'+_id+'/update'}
                             className="form-control btn btn-warning"
-                            onClick={() => { dispatch(updateStagiaireAction(stagiaire)) }}
                         >
                             Modifier
                         </Link>

@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
-import { deleteFilierByAdmin } from '../../../helpers/Admin/Filiers/deleteFilierByAdmin';
-import { getAllFiliers } from '../../../helpers/getAllFiliersByAdmin';
+import { Link, useHistory } from "react-router-dom";
+import { deleteFilierByAdmin } from '../../../helpers/Filiers/deleteFilierByAdmin';
+import { getAllFiliers } from '../../../helpers/Filiers/getAllFiliersByAdmin';
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
 
 const Filiers = ({user}) => {
+    const history = useHistory();
     const [filiers, setfiliers] = useState([])
     useEffect(() => {
-        loadData()
-    }, [])
-
-    const loadData = () => {
         getAllFiliers(user._id)
             .then((result) => {
                 setfiliers(result.details)
             }).catch(err => {
                 console.log(err);
             })
-    }
+    }, [user._id])
 
     const deleteFilier = (id_filier) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer cette filier!") === true) {
@@ -25,7 +22,7 @@ const Filiers = ({user}) => {
                 .then(result => {
                     if (result.status === "OK") {
                         console.log("supprmé avec succes");
-                        loadData();
+                        history.push("/admin/filiers");
                     }
                     else {
                         console.log("error lors de la suppression!");

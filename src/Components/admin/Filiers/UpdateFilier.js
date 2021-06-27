@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import DashboardNavbar from '../Dashboard/DashboardNavbar';
-import { useSelector } from "react-redux";
-import { Redirect, useHistory, useParams } from 'react-router';
-import { getAllNiveaux } from '../../../helpers/getAllNiveaux';
-import { getFilierByAdmin } from '../../../helpers/getFilierByAdmin';
-import { putFilierByAdmin } from '../../../helpers/Admin/Filiers/putFilierByAdmin';
-
-
+import { useHistory, useParams } from 'react-router';
+import { getAllNiveaux } from '../../../helpers/Niveaux/getAllNiveaux';
+import { getFilierByAdmin } from '../../../helpers/Filiers/getFilierByAdmin';
+import { putFilierByAdmin } from '../../../helpers/Filiers/putFilierByAdmin';
 
 function UpdateFilier({user}) {
-    const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
     const [niveau, setniveau ] = useState("");
@@ -25,6 +21,9 @@ function UpdateFilier({user}) {
         .then(result =>{
             setniveaux(result)
         })
+        .catch(err => {
+            setniveaux([])
+        })
         getFilierByAdmin(user._id,id_filier,designation,niveau)
         .then(result => {
             if(result.status === "OK"){
@@ -35,7 +34,7 @@ function UpdateFilier({user}) {
         }).catch(err=> {
             console.log(err);
         })
-    }, [])
+    }, [user._id,id_filier,designation,niveau])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -57,8 +56,7 @@ function UpdateFilier({user}) {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login"/>
+    
     return (
         <div>
             <div>

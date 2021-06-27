@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
-import { useSelector } from "react-redux"
-import { Redirect, useHistory, useParams } from 'react-router'
-import { getAllFiliers } from '../../../helpers/getAllFiliersByAdmin'
-import { getGroupeByAdmin } from '../../../helpers/getGroupeByAdmin'
-import { putGroupeByAdmin } from '../../../helpers/Admin/groupes/putGroupeByAdmin'
+import { useHistory, useParams } from 'react-router'
+import { getAllFiliers } from '../../../helpers/Filiers/getAllFiliersByAdmin'
+import { getGroupeByAdmin } from '../../../helpers/groupes/getGroupeByAdmin'
+import { putGroupeByAdmin } from '../../../helpers/groupes/putGroupeByAdmin'
 
 function UpdateGroupe({user}) {
-    const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
     const [annee, setannee] = useState("");
@@ -16,14 +14,17 @@ function UpdateGroupe({user}) {
     const [filiers, setfiliers ] = useState([]);
     
     const history = useHistory()
-    const {id_g} = useParams();
+    const {id_groupe} = useParams();
 
     useEffect(() => {
         getAllFiliers(user._id)
         .then(result =>{
             setfiliers(result.details)
         })
-        getGroupeByAdmin(user._id,id_g)
+        .catch(err => {
+            setfiliers([]);
+        })
+        getGroupeByAdmin(user._id,id_groupe)
         .then(result =>{
             
             if(result.status === "OK"){
@@ -42,12 +43,12 @@ function UpdateGroupe({user}) {
         return () => {
             console.log("cleanUP!");
         }
-    }, [])
+    }, [user._id,id_groupe])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (window.confirm("êtes-vous sûr de vouloir modifier ce groupe!") === true){
-            putGroupeByAdmin(user._id,id_g, designation , annee , filier)
+            putGroupeByAdmin(user._id,id_groupe, designation , annee , filier)
             .then(result => {
                 if (result.status === "OK") {
                     console.log(result.message);
@@ -65,8 +66,7 @@ function UpdateGroupe({user}) {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login"/>
+    
     return (
         <div>
             <div>

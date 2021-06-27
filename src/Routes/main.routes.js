@@ -62,7 +62,7 @@ const Routes = () => {
                 />
 
                 <Route
-                    path="/admin/absences/update"
+                    path="/admin/absences/:id_absence/update"
                     exact
                     render={() => <UpdateAbsence user={user} />}
                 />
@@ -82,7 +82,7 @@ const Routes = () => {
                 />
 
                 <Route
-                    path="/admin/stagiaires/update"
+                    path="/admin/stagiaires/:id_stagiaire/update"
                     exact
                     render={() => <UpdateStagiaire user={user} />}
                 />

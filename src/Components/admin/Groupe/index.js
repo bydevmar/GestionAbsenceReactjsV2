@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
-import { getAllGroupes } from '../../../helpers/getAllGroupes';
-import { deleteGroupeByAdmin } from '../../../helpers/Admin/groupes/deleteGroupeByAdmin';
+import { getAllGroupes } from '../../../helpers/groupes/getAllGroupes';
+import { deleteGroupeByAdmin } from '../../../helpers/groupes/deleteGroupeByAdmin';
 
 const Groupes = ({user}) => {
     const [groupes, setgroupes] = useState([])
+    const history = useHistory();
     useEffect(() => {
-        loadData()
-    }, [])
-
-    const loadData = () => {
         getAllGroupes(user._id)
             .then((result) => {
                 setgroupes(result.groupes);
             })
-    }
+            .catch(err => {
+                setgroupes([])
+            })
+    }, [user._id])
+
     const deleteGroupe = (id_groupe) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer ce groupe!") === true) {
             deleteGroupeByAdmin(user._id, id_groupe)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log("supprmé avec succes");
-                        loadData();
+                        history.push("/admin/groupes");
                     }
                     else {
                         console.log("error lors de la suppression!");

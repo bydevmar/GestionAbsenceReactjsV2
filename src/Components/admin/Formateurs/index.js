@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
 import DashboardNavbar from "../Dashboard/DashboardNavbar";
-import { getAllFormateurs } from "../../../helpers/getAllFormateurs"
-import { deleteFormateurByAdmin } from "../../../helpers/Admin/Formateur/deleteFormateurByAdmin"
+import { getAllFormateurs } from "../../../helpers/Formateur/getAllFormateurs"
+import { deleteFormateurByAdmin } from "../../../helpers/Formateur/deleteFormateurByAdmin"
 
 const Formateurs = ({user}) => {
-    const [formateurs, setformateurs] = useState([])
+    const [formateurs, setFormateurs] = useState([])
     const history = useHistory();
     useEffect(() => {
-        loadData()
-    }, [])
-
-    const loadData = () => {
-        getAllFormateurs()
+        getAllFormateurs(user._id)
             .then((result) => {
-                setformateurs(result.formateurs)
+                setFormateurs(result.formateurs)
             })
-    }
+            .catch(err => {
+                setFormateurs([])
+            })
+    }, [user._id])
+
     const deleteFormateur = (id) => {
         if (window.confirm("êtes-vous sûr de vouloir supprimer ce Formateur!") === true) {
             deleteFormateurByAdmin(user._id, id)
                 .then(result => {
                     if (result.status === "OK") {
                         console.log(result.message);
-                        loadData()
+                        history.push("/admin/formateurs")
                     }
                 })
                 .catch(err => {

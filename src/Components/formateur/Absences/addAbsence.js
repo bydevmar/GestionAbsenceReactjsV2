@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
-import { useSelector } from "react-redux"
-import { Redirect } from 'react-router'
-import { getAllStagiaires } from '../../../helpers/getAllStagiaires';
+import { getAllStagiaires } from '../../../helpers/Stagiaires/getAllStagiaires';
 import { postAbsence } from '../../../helpers/Absences/postAbsence';
 import { useHistory } from "react-router-dom";
 
 
 function AddAbsenceFormateur({user}) {
-    const isLogged = useSelector(state => state.auth.isLogged);
-    const [stagiaires, setstagiaires] = useState([]);
+    const [stagiaires, setStagiaires] = useState([]);
 
-    const [stagiaire, setstagiaire] = useState("");
-    const [formateur, setformateur] = useState("");
+    const [stagiaire, setStagiaire] = useState("");
     const [dateabsence, setdateabsence] = useState();
-    const [heureDebut, setheureDebut] = useState();
+    const [heureDebut, setHeureDebut] = useState();
     const [heureFin, setheureFin] = useState();
 
     const history = useHistory();
@@ -22,9 +18,9 @@ function AddAbsenceFormateur({user}) {
     useEffect(() => {
         getAllStagiaires(user._id)
             .then((result) => {
-                setstagiaires(result.stagiaires)
-            })
-    }, [])
+                setStagiaires(result.stagiaires)
+            }).catch((err) => console.log(err));
+    }, [user._id])
 
     const remplirComboStagiaires = () => {
         return stagiaires.map((item, index) => {
@@ -49,8 +45,6 @@ function AddAbsenceFormateur({user}) {
             })
     }
 
-    if (!isLogged)
-        return <Redirect to="/login" />
     return (
         <div>
             <div>
@@ -67,7 +61,7 @@ function AddAbsenceFormateur({user}) {
                                         <select
                                             className="form-control mb-3"
                                             aria-label="stagiaire"
-                                            onChange={(e) => setstagiaire(e.target.value)}
+                                            onChange={(e) => setStagiaire(e.target.value)}
                                         >
                                             <option>Selectionner stagiaire</option>
                                             {
@@ -91,7 +85,7 @@ function AddAbsenceFormateur({user}) {
                                             type="time"
                                             min="08:00"
                                             max="18:30"
-                                            onChange={(e) => setheureDebut(e.target.value)}
+                                            onChange={(e) => setHeureDebut(e.target.value)}
                                         />
                                     </div>
 

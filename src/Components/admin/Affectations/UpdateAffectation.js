@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import DashboardNavbar from '../Dashboard/DashboardNavbar';
-import { useSelector } from "react-redux";
-import { Redirect, useHistory, useParams } from 'react-router';
-import { getAllGroupes } from '../../../helpers/getAllGroupes';
-import { getAllFormateurs } from '../../../helpers/getAllFormateurs';
-import {putAffectation, putAffectationByAdmin} from '../../../helpers/Admin/Affectations/putAffectationByAdmin'
-import { getAffectationByAdmin } from '../../../helpers/getAffectationByAdmin';
+import { useHistory, useParams } from 'react-router';
+import { getAllGroupes } from '../../../helpers/groupes/getAllGroupes';
+import { getAllFormateurs } from '../../../helpers/Formateur/getAllFormateurs';
+import { putAffectationByAdmin} from '../../../helpers/Affectations/putAffectationByAdmin'
+import { getAffectationByAdmin } from '../../../helpers/Affectations/getAffectationByAdmin';
 
 const UpdateAffectation = ({user}) => {
-    const isLogged = useSelector(state => state.auth.isLogged);
 
     const [formateur, setformateur] = useState("");
     const [groupe, setgroupe ] = useState("");
 
-    const [formateurs, setformateurs ] = useState([]);
+    const [formateurs, setFormateurs ] = useState([]);
     const [groupes, setgroupes ] = useState([]);
 
     const {id_affectation} = useParams()
@@ -23,11 +21,17 @@ const UpdateAffectation = ({user}) => {
     useEffect(() => {
         getAllFormateurs(user._id)
         .then(result =>{
-            setformateurs(result.formateurs);
+            setFormateurs(result.formateurs);
+        })
+        .catch(err => {
+            setFormateurs([])
         })
         getAllGroupes(user._id)
         .then(result =>{
             setgroupes(result.groupes)
+        })
+        .catch(err => {
+            setgroupes([]);
         })
         getAffectationByAdmin(user._id,id_affectation)
         .then(result =>{
@@ -37,7 +41,10 @@ const UpdateAffectation = ({user}) => {
                 setgroupe(affectation.idgroupe)
             }
         })
-    }, [])
+        .catch(err => {
+            console.log("error update affectation!");
+        })
+    }, [user._id,id_affectation])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -59,8 +66,7 @@ const UpdateAffectation = ({user}) => {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login"/>
+    
     return (
         <div>
             <div>

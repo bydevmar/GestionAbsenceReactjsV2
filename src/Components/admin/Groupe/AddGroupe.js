@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import DashboardNavbar from '../Dashboard/DashboardNavbar'
-import { useSelector } from "react-redux"
-import { Redirect, useHistory } from 'react-router'
-import {postGroupe} from "../../../helpers/Admin/groupes/postGroupeByAdmin"
-import { getAllFiliers } from '../../../helpers/getAllFiliersByAdmin'
+import { useHistory } from 'react-router'
+import {postGroupe} from "../../../helpers/groupes/postGroupeByAdmin"
+import { getAllFiliers } from '../../../helpers/Filiers/getAllFiliersByAdmin'
 
 function AddGroupe({user}) {
-    const isLogged = useSelector(state => state.auth.isLogged);
 
     const [designation, setdesignation] = useState("");
     const [annee, setannee] = useState("");
@@ -21,8 +19,10 @@ function AddGroupe({user}) {
         .then(result =>{
             setfiliers(result.details)
         })
-
-    }, [])
+        .catch(err => {
+            setfiliers([]);
+        })
+    }, [user._id])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -45,8 +45,7 @@ function AddGroupe({user}) {
         }
     }
 
-    if (!isLogged)
-        return <Redirect to="/login"/>
+    
     return (
         <div>
             <div>
